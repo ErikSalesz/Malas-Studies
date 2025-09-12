@@ -4,6 +4,7 @@
 import { initPushNotifications } from './features/push-notifications.js';
 import { initUpdateHandler } from './features/update-handler.js';
 import { initFabHandler } from './features/fab-handler.js';
+import { exibirTarefas } from './features/todo-handler.js';
 
 import { initTimeline } from './components/timeline.js';
 import { initDatePicker } from './components/date-picker.js';
@@ -25,10 +26,12 @@ if ('serviceWorker' in navigator) {
 // 2. Inicializa as funcionalidades importadas
 // O DOMContentLoaded garante que o HTML foi completamente carregado antes de rodar os scripts
 document.addEventListener('DOMContentLoaded', () => {
-    initFabHandler();
-    initUpdateHandler();
     initDatePicker();
     initTimeline();
     initThemeSwitcher();
+
     initPushNotifications();
+    initUpdateHandler();
+    initFabHandler();
+    exibirTarefas();
 });

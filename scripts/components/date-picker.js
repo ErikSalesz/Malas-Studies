@@ -2,20 +2,22 @@
 
 // ---- NOVA IMPORTAÇÃO ----
 import { atualizarExibicaoTimeline } from './timeline.js';
+import { exibirTarefas } from '../features/todo-handler.js';
 
 const datePickerContainer = document.getElementById('date-picker-container');
 const timelineContainer = document.getElementById('timeline-container');
 
 let dataSelecionada = new Date();
 
+// Exportamos uma função "getter" para que outros módulos possam ler a data atual
+export const getdataSelecionada = () => dataSelecionada;
+
 // Função centralizada: Atualiza o estado, a UI do seletor e a timeline
 function selecionarDia(novaData) {
     dataSelecionada = novaData;
     renderizarSeletorDeData();
-
-    // ---- A CONEXÃO ACONTECE AQUI ----
-    // Avisa o módulo da timeline que o dia mudou
-    atualizarExibicaoTimeline(novaData); 
+    atualizarExibicaoTimeline(novaData);
+    exibirTarefas(); // <-- CHAMA A FUNÇÃO PARA ATUALIZAR A LISTA
 }
 
 // Função para renderizar os dias na tela (sem alteração de lógica interna)

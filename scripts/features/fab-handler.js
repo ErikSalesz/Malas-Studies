@@ -1,5 +1,7 @@
 // scripts/features/fab-handler.js
 
+import { salvarTarefa } from './todo-handler.js';
+
 // Seleciona todos os elementos que vamos controlar
 const fabButton = document.getElementById('fab-add-button');
 const overlay = document.getElementById('overlay');
@@ -36,14 +38,13 @@ function closeTodoModal() {
 }
 
 // Função que será chamada para salvar o to-do (por enquanto, só no console)
-function saveTodo(event) {
-    event.preventDefault(); // Impede o recarregamento da página
+async function saveTodo(event) { // <-- Marque a função como async
+    event.preventDefault();
     const todoInput = document.getElementById('todo-input');
     const todoText = todoInput.value.trim();
 
     if (todoText) {
-        console.log('Nova tarefa:', todoText);
-        // Aqui, no futuro, enviaremos o dado para o Supabase
+        await salvarTarefa(todoText); // <-- CHAMA A FUNÇÃO REAL
         closeTodoModal();
     }
 }

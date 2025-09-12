@@ -1,7 +1,7 @@
 // sw.js (VERSÃO ATUALIZADA E MELHORADA)
 
 // 1. Atualizamos a versão do cache
-const CACHE_NAME = 'meu-pwa-cache-v6';
+const CACHE_NAME = 'meu-pwa-cache-v7';
 
 // 2. Atualizamos a lista de arquivos para refletir a nova estrutura
 const urlsToCache = [
@@ -18,6 +18,8 @@ const urlsToCache = [
   '/styles/components/_header.css',
   '/styles/components/_timeline.css',
   '/styles/components/_fab.css',
+  '/styles/components/_todo-list.css',
+  '/styles/components/_ui.css',
 
   // JavaScript
   '/scripts/main.js',
@@ -27,7 +29,11 @@ const urlsToCache = [
   '/scripts/components/date-picker.js',
 
   '/scripts/features/push-notifications.js',
-    '/scripts/features/fab-handler.js',
+  '/scripts/features/fab-handler.js',
+  '/scripts/features/todo-handler.js',
+  '/scripts/features/update-handler.js',
+
+  // Bibliotecas
 
   '/scripts/lib/supabase-client.js',
 ];

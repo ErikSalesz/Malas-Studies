@@ -1,27 +1,32 @@
 // sw.js (VERSÃO ATUALIZADA E MELHORADA)
 
 // 1. Atualizamos a versão do cache
-const CACHE_NAME = 'meu-pwa-cache-v28';
+const CACHE_NAME = 'meu-pwa-cache-v29';
 
 // 2. Atualizamos a lista de arquivos para refletir a nova estrutura
 const urlsToCache = [
   '/',
   '/index.html',
+  'login.html',
   '/manifest.json',
   '/assets/icon-192x192.png',
   '/assets/icon-512x512.png',
   
   // CSS
   '/styles/main.css',
+
+  '/styles/pages/_login.css',
   '/styles/base/_base.css',
   '/styles/base/_variables.css',
+
   '/styles/components/_header.css',
   '/styles/components/_timeline.css',
   '/styles/components/_fab.css',
   '/styles/components/_ui.css',
 
   // JavaScript
-  '/scripts/main.js',
+  '/scripts/app.js',
+  '/scripts/login.js',
 
   '/scripts/components/theme-switcher.js',
   '/scripts/components/timeline.js',
@@ -31,6 +36,8 @@ const urlsToCache = [
   '/scripts/features/fab-handler.js',
   '/scripts/features/agenda-handler.js',
   '/scripts/features/update-handler.js',
+  '/scripts/features/auth-handler.js',
+
 
   // Bibliotecas
 

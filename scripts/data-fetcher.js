@@ -1,13 +1,13 @@
 // scripts/data-fetcher.js
 
 // Importa nosso cliente Supabase já configurado
-import supabase from './supabase-client.js';
+import supabaseClient from './supabase-client.js';
 
 export async function carregarMensagens() {
     const lista = document.getElementById('mensagens-lista');
     
     // Usa o cliente para fazer uma query na tabela 'mensagens'
-    const { data: mensagens, error } = await supabase
+    const { data: mensagens, error } = await supabaseClient // <-- Mude aqui também
         .from('mensagens')
         .select('*');
         

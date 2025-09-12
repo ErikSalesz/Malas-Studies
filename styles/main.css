@@ -1,10 +1,10 @@
-/* styles/main.css */
+/* styles/main.css - Versão Melhorada */
 
 /* 
-  A ordem de importação é importante! 
-  1. Variáveis primeiro, para que todos os outros arquivos possam usá-las.
-  2. Estilos base depois, para definir os padrões globais.
-  3. Componentes por último, para estilizar as partes específicas da UI.
+  Ordem de importação otimizada:
+  1. Variáveis com sistema de cores mais robusto
+  2. Base com tipografia e layout modernos
+  3. Componentes com design system consistente
 */
 
 @import url('./base/_variables.css');

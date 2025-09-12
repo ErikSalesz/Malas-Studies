@@ -1,91 +1,293 @@
-/* styles/components/_header.css (VERSÃO ATUALIZADA E UNIFICADA) */
+/* styles/components/_header.css - Header Moderno com Glassmorphism */
 
-/* --- Estilos do Header Principal --- */
+/* === HEADER PRINCIPAL === */
 header {
-    background: var(--cor-cabecalho-fundo);
-    color: var(--cor-cabecalho-texto);
-    padding: 0 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-sizing: border-box;
+  background: var(--cor-cabecalho-fundo);
+  backdrop-filter: var(--blur-md);
+  -webkit-backdrop-filter: var(--blur-md);
+  border-bottom: 1px solid var(--cor-cabecalho-borda);
+  color: var(--cor-cabecalho-texto);
+  padding: 0 var(--espacamento-lg);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  transition: all var(--transicao-media);
+}
+
+/* Efeito de elevação quando scrolling */
+header.elevated {
+  box-shadow: var(--sombra-lg);
 }
 
 header h1 {
-    font-size: 1.5em;
-    white-space: nowrap; /* Impede que o título quebre linha */
+  font-size: 1.5rem;
+  font-weight: 700;
+  white-space: nowrap;
+  background: linear-gradient(135deg, var(--cor-primaria), var(--primary-700));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
 }
 
-/* Novo container dos controles da direita */
+/* === CONTAINER DOS CONTROLES === */
 .header-controls {
-    display: flex;
-    align-items: center;
-    gap: 25px; /* Espaço entre os botões de ícone e o seletor de datas */
+  display: flex;
+  align-items: center;
+  gap: var(--espacamento-xl);
 }
 
-/* --- Estilos dos Botões de Ícone (sem alteração) --- */
+/* === BOTÕES DE AÇÃO === */
 .header-actions {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: var(--espacamento-sm);
 }
 
 .header-button {
-    background: none;
-    border: none;
-    color: var(--cor-cabecalho-texto);
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s;
+  background: none;
+  border: none;
+  color: var(--cor-cabecalho-texto);
+  cursor: pointer;
+  padding: var(--espacamento-sm);
+  border-radius: var(--raio-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transicao-rapida);
+  position: relative;
+  width: 44px;
+  height: 44px;
 }
 
 .header-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--cor-primaria-light);
+  transform: scale(1.05);
 }
 
-[data-theme="dark"] .header-button:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+.header-button:active {
+  transform: scale(0.95);
+}
+
+/* Efeito ripple nos botões */
+.header-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle, var(--cor-primaria) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(0);
+  transition: all var(--transicao-rapida);
+}
+
+.header-button:active::before {
+  opacity: 0.3;
+  transform: scale(1);
 }
 
 .header-button svg {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
 }
 
-/* --- Estilos do Seletor de Datas (AJUSTADOS) --- */
+/* === SELETOR DE DATAS === */
+#date-picker-wrapper {
+  position: relative;
+}
+
 #date-picker-container {
-    display: flex;
-    gap: 15px; /* Espaço entre os dias */
+  display: flex;
+  gap: var(--espacamento-md);
+  padding: var(--espacamento-xs);
+  background: var(--cor-fundo-terciario);
+  border-radius: var(--raio-lg);
+  border: 1px solid var(--cor-borda);
 }
 
 .day-item {
-    cursor: pointer;
-    text-align: center;
-    padding: 5px 8px;
-    border-radius: 8px; /* Bordas arredondadas para o destaque */
-    transition: background-color 0.2s;
-    color: var(--cor-cabecalho-texto);
+  cursor: pointer;
+  text-align: center;
+  padding: var(--espacamento-sm) var(--espacamento-md);
+  border-radius: var(--raio-md);
+  transition: all var(--transicao-rapida);
+  color: var(--cor-texto-secundario);
+  min-width: 48px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.day-item:hover {
+  background-color: var(--cor-primaria-light);
+  color: var(--cor-primaria);
+  transform: translateY(-2px);
 }
 
 .day-name {
-    font-size: 0.8em;
-    text-transform: capitalize;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
 }
 
 .day-number {
-    font-size: 1.1em;
-    font-weight: bold;
+  font-size: 1.125rem;
+  font-weight: 700;
 }
 
-/* NOVO ESTILO PARA O DIA ATIVO */
+/* Dia ativo com design moderno */
 .day-item.active {
-    background-color: var(--cor-fundo); /* Fundo claro no tema escuro, e vice-versa */
-    color: var(--cor-texto); /* Texto escuro no tema escuro, e vice-versa */
+  background: linear-gradient(135deg, var(--cor-primaria), var(--primary-700));
+  color: white;
+  box-shadow: var(--sombra-md);
+  transform: translateY(-2px);
+}
+
+.day-item.active::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, var(--cor-primaria), var(--primary-700));
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.7;
+  filter: blur(8px);
+}
+
+/* Indicador para hoje */
+.day-item.today:not(.active) {
+  background: var(--cor-primaria-light);
+  color: var(--cor-primaria);
+  font-weight: 700;
+}
+
+.day-item.today:not(.active)::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--cor-primaria);
+  border-radius: 50%;
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 768px) {
+  header {
+    padding: 0 var(--espacamento-md);
+    height: 70px;
+  }
+  
+  header h1 {
+    font-size: 1.25rem;
+  }
+  
+  .header-controls {
+    gap: var(--espacamento-md);
+  }
+  
+  #date-picker-container {
+    gap: var(--espacamento-sm);
+    padding: 2px;
+  }
+  
+  .day-item {
+    padding: var(--espacamento-xs) var(--espacamento-sm);
+    min-width: 40px;
+  }
+  
+  .day-name {
+    font-size: 0.625rem;
+  }
+  
+  .day-number {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: 0 var(--espacamento-sm);
+    height: 60px;
+  }
+  
+  header h1 {
+    font-size: 1.125rem;
+  }
+  
+  .header-controls {
+    gap: var(--espacamento-sm);
+  }
+  
+  .header-button {
+    width: 40px;
+    height: 40px;
+    padding: var(--espacamento-xs);
+  }
+  
+  .header-button svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  #date-picker-container {
+    gap: 4px;
+  }
+  
+  .day-item {
+    padding: 4px 6px;
+    min-width: 32px;
+  }
+  
+  .day-name {
+    font-size: 0.5rem;
+    margin-bottom: 1px;
+  }
+  
+  .day-number {
+    font-size: 0.875rem;
+  }
+}
+
+/* === ANIMAÇÕES === */
+@keyframes headerSlideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+header {
+  animation: headerSlideDown 0.5s ease-out;
+}
+
+/* Animação suave para mudanças de tema */
+[data-theme="dark"] header {
+  transition: all var(--transicao-media);
+}
+
+/* === ESTADOS ESPECIAIS === */
+.header-button[aria-pressed="true"] {
+  background-color: var(--cor-primaria-light);
+  color: var(--cor-primaria);
+}
+
+/* Melhor contraste para acessibilidade */
+@media (prefers-contrast: high) {
+  header {
+    border-bottom: 2px solid var(--cor-borda);
+  }
+  
+  .header-button {
+    border: 1px solid var(--cor-borda);
+  }
 }

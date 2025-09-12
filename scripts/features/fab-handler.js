@@ -1,6 +1,6 @@
 // scripts/features/fab-handler.js
 
-import { salvarTarefa } from './agenda-handler.js';
+import { salvarAgendamento  } from './agenda-handler.js';
 
 // Seleciona todos os elementos que vamos controlar
 const fabButton = document.getElementById('fab-add-button');

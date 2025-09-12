@@ -12,6 +12,11 @@
         <h1>Bem-vindo ao Meu PWA!</h1>
     </header>
     <main>
+        <h2>Mensagens do Banco de Dados:</h2>
+        <ul id="mensagens-lista">
+            <li>Carregando...</li>
+        </ul>
+        <hr>
         <div class="theme-switcher">
             <button id="theme-toggle">Alternar para Modo Escuro</button>
         </div>
@@ -20,6 +25,12 @@
         </div>
         <p>Este PWA agora está online graças à Vercel!</p>
     </main>
+
+    <!-- Biblioteca do Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Nosso script principal (agora é o último) -->
     <script type="module" src="scripts/main.js"></script>
+
 </body>
 </html>

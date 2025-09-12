@@ -2,7 +2,7 @@
 
 /* --- Estilos do Header Principal --- */
 header {
-    background: red;
+    background: var(--cor-cabecalho-fundo);
     color: var(--cor-cabecalho-texto);
     padding: 0 20px;
     position: sticky;

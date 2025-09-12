@@ -36,6 +36,10 @@ function renderizarSeletorDeData() {
             diaItem.classList.add('active');
         }
 
+        if (dataDoLoop.toDateString() === hoje.toDateString()) {
+            diaItem.classList.add('today'); // Adiciona a classe para hoje
+        }
+
         const nomeDia = dataDoLoop.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
         const numeroDia = dataDoLoop.getDate();
 

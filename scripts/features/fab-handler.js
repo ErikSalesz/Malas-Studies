@@ -9,7 +9,7 @@ const bottomSheet = document.getElementById('actions-bottom-sheet');
 const addTodoAction = document.getElementById('add-todo-action');
 const todoModal = document.getElementById('todo-modal');
 const todoForm = document.getElementById('todo-form');
-const cancelTodoButton = document.getElementById('cancel-todo-button');
+const cancelTodoButton = todoModal.querySelector('button[type="button"]');
 
 // Funções para mostrar/esconder elementos
 const show = (element) => element.classList.remove('hidden');

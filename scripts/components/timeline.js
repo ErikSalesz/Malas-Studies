@@ -1,7 +1,6 @@
 // scripts/components/timeline.js (VERSÃO ATUALIZADA)
 
 const timelineContent = document.getElementById('timeline-content');
-const timeLine = document.getElementById('current-time-line');
 
 // Função interna que calcula e posiciona a linha
 function posicionarLinhaDoTempo() {
@@ -9,11 +8,13 @@ function posicionarLinhaDoTempo() {
     const options = { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', hour12: false };
     const formatador = new Intl.DateTimeFormat('pt-BR', options);
     const [hora, minuto] = formatador.format(agora).split(':').map(Number);
+    const timeLine = document.getElementById('current-time-line');
     
     const minutosTotaisDoDia = (hora * 60) + minuto;
     const porcentagemDoDia = (minutosTotaisDoDia / 1440) * 100;
 
     timeLine.style.top = `${porcentagemDoDia}%`;
+    timeLine.setAttribute('data-time', `${String(hora).padStart(2, '0')}:${String(minuto).padStart(2, '0')}`);
 }
 
 // Função para gerar os marcadores de hora (sem alteração)

@@ -84,12 +84,12 @@ async function atualizarAgendamento(id, novosDados) {
 
 // NOVA FUNÇÃO PARA DELETAR
 async function deletarAgendamento() {
-    if (!agendamentoSelecionadoId) return;
+    if (!agendamentoSelecionado) return;
 
     const { error } = await supabaseClient
         .from('agendamentos')
         .delete()
-        .eq('id', agendamentoSelecionadoId);
+        .eq('id', agendamentoSelecionado);
 
     if (error) {
         console.error('Erro ao deletar agendamento:', error);

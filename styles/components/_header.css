@@ -1,0 +1,68 @@
+/* styles/components/_header.css */
+header {
+    background: var(--cor-cabecalho-fundo);
+    color: var(--cor-cabecalho-texto);
+    padding: 1rem 0;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+    /* Novas propriedades para o header fixo */
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Garante que ele fique acima de tudo */
+    height: 60px; /* Altura definida para o header */
+
+    /* Novas propriedades para alinhar itens */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+header h1 {
+    font-size: 1.5em; /* Ajuste opcional no tamanho do título */
+}
+
+/* Empurra o conteúdo principal para baixo para não ficar atrás do header */
+main {
+    padding-top: 20px; /* Adiciona um espaço extra no topo do main */
+}
+
+/* Container para os botões no header */
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Estilo geral para os botões do header */
+.header-button {
+    background: none;
+    border: none;
+    color: var(--cor-cabecalho-texto);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.header-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .header-button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Ajusta o tamanho dos ícones dentro dos botões */
+.header-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.theme-switcher {
+    padding: 10px;
+    text-align: center;
+}

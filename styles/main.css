@@ -1,0 +1,14 @@
+/* styles/main.css */
+
+/* 
+  A ordem de importação é importante! 
+  1. Variáveis primeiro, para que todos os outros arquivos possam usá-las.
+  2. Estilos base depois, para definir os padrões globais.
+  3. Componentes por último, para estilizar as partes específicas da UI.
+*/
+
+@import url('./base/_variables.css');
+@import url('./base/_base.css');
+
+@import url('./components/_header.css');
+@import url('./components/_timeline.css');

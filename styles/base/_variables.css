@@ -1,0 +1,14 @@
+/* styles/base/_variables.css */
+:root {
+    --cor-fundo: #f4f4f4;
+    --cor-texto: #333;
+    --cor-cabecalho-fundo: #333;
+    --cor-cabecalho-texto: #fff;
+}
+
+[data-theme="dark"] {
+    --cor-fundo: #333;
+    --cor-texto: #f4f4f4;
+    --cor-cabecalho-fundo: #222;
+    --cor-cabecalho-texto: #fff;
+}

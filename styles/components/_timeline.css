@@ -1,0 +1,54 @@
+/* timeline */
+
+.timeline-wrapper {
+    margin-bottom: 30px;
+}
+
+#timeline-container {
+    position: relative; /* Essencial para posicionar a linha */
+    background-color: #e9e9e9;
+    border-radius: 5px;
+    padding: 10px 0;
+    border: 1px solid #ddd;
+}
+
+[data-theme="dark"] #timeline-container {
+    background-color: #444;
+    border-color: #555;
+}
+
+.hour-slot {
+    height: 60px; /* Cada slot representa 1 hora */
+    border-bottom: 1px dashed #ccc;
+    box-sizing: border-box; /* Garante que a borda não adicione altura extra */
+    padding-left: 10px;
+    color: #888;
+    font-size: 0.9em;
+}
+
+.hour-slot:last-child {
+    border-bottom: none;
+}
+
+#current-time-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: red;
+    left: 0;
+    /* A propriedade 'top' será controlada pelo JavaScript */
+    top: 50%; /* Valor inicial de exemplo */
+    transition: top 0.5s ease-out; /* Animação suave */
+}
+
+/* Adiciona uma bolinha na ponta da linha para ficar mais visível */
+#current-time-line::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: -4px;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+}

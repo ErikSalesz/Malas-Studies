@@ -1,0 +1,14 @@
+/* styles/base/_base.css */
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    /* Remova o padding de 20px daqui, vamos movê-lo para o main */
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+main {
+    padding: 20px; /* Adicione o padding aqui */
+}

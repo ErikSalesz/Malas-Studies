@@ -6,7 +6,6 @@ import { getdataSelecionada } from '../components/date-picker.js'; // Importa no
 // Função para SALVAR uma nova tarefa no banco de dados
 export async function salvarTarefa(conteudo) {
     const data = getdataSelecionada();
-    // Formata a data para 'YYYY-MM-DD', que é o formato que o Supabase entende para o tipo 'date'
     const dataFormatada = data.toISOString().split('T')[0];
 
     const { data: novaTarefa, error } = await supabaseClient
@@ -14,7 +13,8 @@ export async function salvarTarefa(conteudo) {
         .insert([
             {
                 conteudo: conteudo,
-                data_tarefa: dataFormatada
+                data_tarefa: dataFormatada,
+                concluida: false, // <-- A LINHA QUE FALTAVA!
             }
         ]);
     

@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu PWA</title>
     
-    <!-- Feather Icons - Adicione esta linha -->
-    <script src="https://unpkg.com/feather-icons" defer></script>
-    
     <link rel="stylesheet" href="styles/main.css">
     <link rel="manifest" href="manifest.json">
 </head>
@@ -48,6 +45,16 @@
         <!-- FIM DA NOVA LINHA DO TEMPO -->
 
     </main>
+
+    <!-- INÍCIO DA NOTIFICAÇÃO DE ATUALIZAÇÃO -->
+    <div id="update-notification" class="hidden">
+        <span>Uma nova versão está disponível!</span>
+        <button id="update-button">Atualizar</button>
+    </div>
+    <!-- FIM DA NOTIFICAÇÃO DE ATUALIZAÇÃO -->
+
+    <!-- Feather Icons - Adicione esta linha -->
+    <script src="https://unpkg.com/feather-icons" defer></script>
 
     <!-- Biblioteca do Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

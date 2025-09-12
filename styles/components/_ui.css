@@ -1,0 +1,32 @@
+/* styles/components/_ui.css */
+#update-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--cor-cabecalho-texto);
+    color: var(--cor-cabecalho-fundo);
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: opacity 0.3s, transform 0.3s;
+    opacity: 1;
+}
+
+#update-notification.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(200%);
+}
+
+#update-notification button {
+    background-color: var(--cor-texto);
+    color: var(--cor-fundo);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}

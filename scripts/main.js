@@ -1,9 +1,9 @@
 // scripts/main.js
 
 // Importa as funções dos nossos módulos
-import { initThemeSwitcher } from './theme-switcher.js';
-import { initPushNotifications } from './push-notifications.js';
-import { initTimeline } from './timeline.js';
+import { initThemeSwitcher } from './components/theme-switcher.js';
+import { initPushNotifications } from './features/push-notifications.js';
+import { initTimeline } from './components/timeline.js';
 
 // 1. Registra o Service Worker
 if ('serviceWorker' in navigator) {

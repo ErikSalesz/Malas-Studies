@@ -1,7 +1,7 @@
 // sw.js (VERSÃO ATUALIZADA E MELHORADA)
 
 // 1. Atualizamos a versão do cache
-const CACHE_NAME = 'meu-pwa-cache-v30';
+const CACHE_NAME = 'meu-pwa-cache-v31';
 
 // 2. Atualizamos a lista de arquivos para refletir a nova estrutura
 const urlsToCache = [
@@ -78,13 +78,25 @@ self.addEventListener('activate', event => {
 });
 // Evento de 'fetch': Intercepta as requisições e serve do cache se disponível
 self.addEventListener('fetch', event => {
+  // Verifica se a requisição é para uma página de navegação (ex: index.html)
+  if (event.request.mode === 'navigate') {
+    // Estratégia: Tenta a rede primeiro.
+    event.respondWith(
+      fetch(event.request)
+        .catch(() => {
+          // Se a rede falhar, serve o index.html principal do cache como fallback.
+          return caches.match('/index.html');
+        })
+    );
+    return;
+  }
+
+  // Para todas as outras requisições (CSS, JS, imagens), usa a estratégia "Cache First".
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // Se o recurso estiver no cache, retorna ele. Caso contrário, busca na rede.
         return response || fetch(event.request);
-      }
-    )
+      })
   );
 });
 

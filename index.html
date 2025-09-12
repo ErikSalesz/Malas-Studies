@@ -53,6 +53,43 @@
     </div>
     <!-- FIM DA NOTIFICAÇÃO DE ATUALIZAÇÃO -->
 
+    <!-- INÍCIO DOS NOVOS ELEMENTOS FLUTUANTES -->
+
+    <!-- O "Fundo" escurecido que aparece atrás dos modais -->
+    <div id="overlay" class="hidden"></div>
+
+    <!-- O Modal para adicionar o To-do -->
+    <div id="todo-modal" class="modal hidden">
+        <h3>Nova Tarefa</h3>
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="O que você precisa fazer?" required>
+            <div class="modal-actions">
+                <button type="button" id="cancel-todo-button">Cancelar</button>
+                <button type="submit">Salvar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- O Menu de Ações que sobe -->
+    <div id="actions-bottom-sheet" class="bottom-sheet hidden">
+        <ul>
+            <li>
+                <button id="add-todo-action">
+                    <i data-feather="check-square"></i>
+                    <span>Adicionar Tarefa</span>
+                </button>
+            </li>
+            <!-- No futuro, outras ações podem vir aqui -->
+        </ul>
+    </div>
+    
+    <!-- O Botão Flutuante (FAB) -->
+    <button id="fab-add-button" class="fab" aria-label="Adicionar item">
+        <i data-feather="plus"></i>
+    </button>
+
+    <!-- FIM DOS NOVOS ELEMENTOS FLUTUANTES -->
+
     <!-- Feather Icons - Adicione esta linha -->
     <script src="https://unpkg.com/feather-icons" defer></script>
 

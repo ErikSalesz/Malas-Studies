@@ -1,0 +1,1 @@
+console.log('Meu PWA foi carregado!');

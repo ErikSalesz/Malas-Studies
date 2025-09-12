@@ -70,3 +70,11 @@
 .auth-message.hidden {
     display: none;
 }
+
+.password-hint {
+    font-size: 0.75rem;
+    color: var(--cor-texto-terciario);
+    text-align: right;
+    margin-top: var(--espacamento-xs);
+    margin-bottom: 0; /* Remove a margem padrão do <p> */
+}

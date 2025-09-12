@@ -17,20 +17,17 @@ loginButton.addEventListener('click', async (event) => {
 signupButton.addEventListener('click', async () => {
     const email = form.email.value;
     const password = form.password.value;
+
+    // --- NOVA VALIDAÇÃO ---
+    if (password.length < 6) {
+        messageEl.textContent = 'Sua senha deve ter no mínimo 6 caracteres.';
+        messageEl.classList.remove('hidden');
+        return; // Para a execução aqui
+    }
+    // --- FIM DA VALIDAÇÃO ---
+
     const { error } = await signUp(email, password);
-    handleAuthResponse(error, 'Conta criada! Faça o login.');
+    handleAuthResponse(error, 'Conta criada com sucesso! Verifique seu e-mail e faça o login.');
 });
 
-function handleAuthResponse(error, successMessage = null) {
-    if (error) {
-        messageEl.textContent = error.message;
-        messageEl.classList.remove('hidden');
-    } else {
-        if (successMessage) {
-            alert(successMessage);
-            form.reset();
-        } else {
-            window.location.href = '/index.html'; // Redireciona para o app
-        }
-    }
-}
+handleAuthResponse(error, 'Conta criada com sucesso! Você já pode entrar.');

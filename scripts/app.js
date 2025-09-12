@@ -1,7 +1,7 @@
 // scripts/app.js (VERSÃO FINAL DE AUTENTICAÇÃO)
 
 // Importa as funcionalidades necessárias
-import { getUser } from './features/auth-handler.js';
+import { getUser, signOut } from './features/auth-handler.js';
 import { initTimeline } from './components/timeline.js';
 import { initThemeSwitcher } from './components/theme-switcher.js';
 import { initPushNotifications } from './features/push-notifications.js';
@@ -27,11 +27,10 @@ if ('serviceWorker' in navigator) {
 async function checkUserAuthentication() {
     const user = await getUser();
     if (!user) {
-        // Se não há usuário logado, redireciona para a página de login
         window.location.replace('/login.html');
     } else {
-        // Se o usuário está logado, carrega o resto do aplicativo
         console.log('Usuário autenticado:', user.email);
+        
         // Inicializa todas as partes da aplicação principal
         initDatePicker();
         initTimeline();
@@ -40,6 +39,21 @@ async function checkUserAuthentication() {
         initFabHandler();
         initAgendaHandler();
         exibirAgendamentos();
+
+        // --- LÓGICA DO LOGOUT ---
+        const logoutButton = document.getElementById('logout-button');
+        if (logoutButton) {
+            logoutButton.addEventListener('click', async () => {
+                await signOut();
+                // Redireciona para a página de login após o logout
+                window.location.replace('/login.html');
+            });
+        }
+        
+        // Renderiza os novos ícones do Feather.js (incluindo o de logout)
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
     }
 }
 

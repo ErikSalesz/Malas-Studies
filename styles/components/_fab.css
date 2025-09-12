@@ -356,6 +356,49 @@
   transform: translateY(0);
 }
 
+/* --- ESTILOS ADICIONAIS PARA O MODAL DE DETALHES --- */
+
+#modal-content-display {
+  margin-bottom: var(--espacamento-2xl);
+}
+
+.modal-time-display {
+  display: flex;
+  align-items: center;
+  gap: var(--espacamento-sm);
+  color: var(--cor-texto-secundario);
+  margin-top: var(--espacamento-md);
+}
+
+.modal-time-display svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Estilo para o botão de Deletar */
+.modal-actions button.danger {
+  background: var(--error-50);
+  color: var(--error-600);
+  border: 2px solid var(--error-500);
+}
+
+.modal-actions button.danger:hover {
+  background: var(--error-500);
+  color: white;
+  box-shadow: var(--sombra-md);
+  border-color: var(--error-500);
+}
+
+[data-theme="dark"] .modal-actions button.danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--error-500);
+}
+
+[data-theme="dark"] .modal-actions button.danger:hover {
+  background: var(--error-500);
+  color: white;
+}
+
 /* === RESPONSIVIDADE === */
 @media (max-width: 768px) {
   .fab {

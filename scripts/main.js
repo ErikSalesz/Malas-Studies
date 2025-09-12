@@ -4,7 +4,7 @@
 import { initPushNotifications } from './features/push-notifications.js';
 import { initUpdateHandler } from './features/update-handler.js';
 import { initFabHandler } from './features/fab-handler.js';
-import { exibirAgendamentos } from './features/agenda-handler.js';
+import { exibirAgendamentos, initAgendaHandler } from './features/agenda-handler.js';
 
 
 import { initTimeline } from './components/timeline.js';
@@ -35,4 +35,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initUpdateHandler();
     initFabHandler();
     exibirAgendamentos();
+    initAgendaHandler();
 });

@@ -89,6 +89,27 @@
         </form>
     </div>
 
+    <!-- INÍCIO DO NOVO MODAL DE DETALHES -->
+    <div id="agenda-details-modal" class="modal hidden">
+        <div id="modal-content-display">
+            <h3 id="modal-agenda-content">Carregando...</h3>
+            <div class="modal-time-display">
+                <i data-feather="clock"></i>
+                <span id="modal-agenda-time">Carregando...</span>
+            </div>
+        </div>
+        
+        <!-- Futuramente, aqui entrará o formulário de edição -->
+        <!-- <div id="modal-content-edit" class="hidden"> ... </div> -->
+
+        <div class="modal-actions">
+            <button type="button" id="close-details-button">Fechar</button>
+            <button type="button" id="delete-agenda-button" class="danger">Deletar</button>
+            <button type="button" id="edit-agenda-button">Editar</button>
+        </div>
+    </div>
+    <!-- FIM DO NOVO MODAL DE DETALHES -->
+
     <!-- O Menu de Ações que sobe -->
     <div id="actions-bottom-sheet" class="bottom-sheet hidden">
         <ul>

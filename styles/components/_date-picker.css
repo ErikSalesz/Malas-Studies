@@ -1,0 +1,53 @@
+/* styles/components/_date-picker.css */
+
+#date-picker-wrapper {
+    background-color: var(--cor-cabecalho-fundo);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 60px; /* Altura do header, para "colar" logo abaixo dele */
+    z-index: 999; /* Um pouco abaixo do header */
+}
+
+[data-theme="dark"] #date-picker-wrapper {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+#date-picker-container {
+    display: flex;
+    justify-content: center; /* Centraliza os dias */
+    gap: 20px;
+}
+
+.day-item {
+    cursor: pointer;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+    color: var(--cor-cabecalho-texto);
+}
+
+.day-item:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .day-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.day-name {
+    font-size: 0.8em;
+    text-transform: capitalize;
+}
+
+.day-number {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* Estilo para o dia selecionado */
+.day-item.active .day-number {
+    border-bottom: 2px solid var(--cor-cabecalho-texto);
+    padding-bottom: 2px;
+}

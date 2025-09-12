@@ -1,7 +1,7 @@
 // sw.js (VERSÃO ATUALIZADA E MELHORADA)
 
 // 1. Atualizamos a versão do cache
-const CACHE_NAME = 'meu-pwa-cache-v2';
+const CACHE_NAME = 'meu-pwa-cache-v3';
 
 // 2. Atualizamos a lista de arquivos para refletir a nova estrutura
 const urlsToCache = [
@@ -17,13 +17,17 @@ const urlsToCache = [
   '/styles/base/_variables.css',
   '/styles/components/_header.css',
   '/styles/components/_timeline.css',
+  '/styles/components/_date-picker.css',
 
   // JavaScript
   '/scripts/main.js',
+
   '/scripts/components/theme-switcher.js',
   '/scripts/components/timeline.js',
+  '/scripts/components/date-picker.js',
+
   '/scripts/features/push-notifications.js',
-  '/scripts/lib/supabase-client.js'
+  '/scripts/lib/supabase-client.js',
 ];
 
 // Evento de 'install': Salva os arquivos essenciais em cache

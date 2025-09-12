@@ -120,7 +120,8 @@
     width: 100%;
     padding: 10px;
     font-size: 1em;
-    margin-bottom: 20px;
+    /* ATUALIZE A MARGEM */
+    margin-bottom: 15px;
     box-sizing: border-box;
 }
 
@@ -128,4 +129,21 @@
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+}
+
+/* NOVOS ESTILOS */
+.time-inputs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.time-inputs div {
+    flex: 1;
+}
+
+.time-inputs label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
 }

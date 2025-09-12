@@ -52,3 +52,18 @@
     background-color: red;
     border-radius: 50%;
 }
+
+/* --- Estilos para os Blocos de Agendamento --- */
+.agenda-item {
+    position: absolute;
+    left: 60px; /* Deixa espaço para os marcadores de hora */
+    right: 10px;
+    background-color: #3a86ff; /* Uma cor de destaque */
+    border-radius: 4px;
+    padding: 5px;
+    box-sizing: border-box;
+    color: white;
+    font-size: 0.9em;
+    overflow: hidden;
+    border-left: 3px solid #0055d4;
+}

@@ -44,15 +44,6 @@
         </div>
         <!-- FIM DA NOVA LINHA DO TEMPO -->
 
-        <!-- INÍCIO DA LISTA DE TAREFAS -->
-        <div class="todo-list-wrapper">
-            <h2>Tarefas</h2>
-            <ul id="todo-list">
-                <li>Carregando tarefas...</li>
-            </ul>
-        </div>
-        <!-- FIM DA LISTA DE TAREFAS -->
-
     </main>
 
     <!-- INÍCIO DA NOTIFICAÇÃO DE ATUALIZAÇÃO -->
@@ -69,9 +60,23 @@
 
     <!-- O Modal para adicionar o To-do -->
     <div id="todo-modal" class="modal hidden">
-        <h3>Nova Tarefa</h3>
+        <h3>Novo Agendamento</h3> <!-- Mude o título -->
         <form id="todo-form">
-            <input type="text" id="todo-input" placeholder="O que você precisa fazer?" required>
+            <input type="text" id="todo-input" placeholder="O que você vai estudar?" required>
+            
+            <!-- NOVOS CAMPOS DE HORÁRIO -->
+            <div class="time-inputs">
+                <div>
+                    <label for="start-time">Início</label>
+                    <input type="time" id="start-time" required>
+                </div>
+                <div>
+                    <label for="end-time">Fim</label>
+                    <input type="time" id="end-time" required>
+                </div>
+            </div>
+            <!-- FIM DOS NOVOS CAMPOS -->
+
             <div class="modal-actions">
                 <button type="button" id="cancel-todo-button">Cancelar</button>
                 <button type="submit">Salvar</button>

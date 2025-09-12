@@ -1,6 +1,6 @@
 // scripts/features/fab-handler.js
 
-import { salvarTarefa } from './todo-handler.js';
+import { salvarTarefa } from './agenda-handler.js';
 
 // Seleciona todos os elementos que vamos controlar
 const fabButton = document.getElementById('fab-add-button');
@@ -38,13 +38,19 @@ function closeTodoModal() {
 }
 
 // Função que será chamada para salvar o to-do (por enquanto, só no console)
-async function saveTodo(event) { // <-- Marque a função como async
+async function saveTodo(event) {
     event.preventDefault();
     const todoInput = document.getElementById('todo-input');
-    const todoText = todoInput.value.trim();
+    const startTimeInput = document.getElementById('start-time');
+    const endTimeInput = document.getElementById('end-time');
 
-    if (todoText) {
-        await salvarTarefa(todoText); // <-- CHAMA A FUNÇÃO REAL
+    const conteudo = todoInput.value.trim();
+    const horaInicio = startTimeInput.value;
+    const horaFim = endTimeInput.value;
+
+    if (conteudo && horaInicio && horaFim) {
+        // CHAMA A NOVA FUNÇÃO COM OS NOVOS DADOS
+        await salvarAgendamento(conteudo, horaInicio, horaFim);
         closeTodoModal();
     }
 }

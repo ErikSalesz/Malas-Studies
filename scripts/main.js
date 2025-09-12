@@ -4,7 +4,7 @@
 import { initPushNotifications } from './features/push-notifications.js';
 import { initUpdateHandler } from './features/update-handler.js';
 import { initFabHandler } from './features/fab-handler.js';
-import { exibirTarefas, initTodoList } from './features/todo-handler.js';
+import { exibirAgendamentos, initTodoList } from './features/agenda-handler.js';
 
 
 import { initTimeline } from './components/timeline.js';
@@ -34,6 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initPushNotifications();
     initUpdateHandler();
     initFabHandler();
-    exibirTarefas();
+    exibirAgendamentos();
     initTodoList();
 });

@@ -2,7 +2,7 @@
 
 // ---- NOVA IMPORTAÇÃO ----
 import { atualizarExibicaoTimeline } from './timeline.js';
-import { exibirTarefas } from '../features/todo-handler.js';
+import { exibirAgendamentos } from '../features/agenda-handler.js';
 
 const datePickerContainer = document.getElementById('date-picker-container');
 const timelineContainer = document.getElementById('timeline-container');
@@ -17,7 +17,7 @@ function selecionarDia(novaData) {
     dataSelecionada = novaData;
     renderizarSeletorDeData();
     atualizarExibicaoTimeline(novaData);
-    exibirTarefas(); // <-- CHAMA A FUNÇÃO PARA ATUALIZAR A LISTA
+    exibirAgendamentos(); // <-- Já está aqui, só confira
 }
 
 // Função para renderizar os dias na tela (sem alteração de lógica interna)

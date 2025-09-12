@@ -56,6 +56,8 @@ export async function exibirTarefas() {
         tarefas.forEach(tarefa => {
             const item = document.createElement('li');
             item.className = 'todo-item';
+            item.dataset.id = tarefa.id; // <-- ADICIONE ESTA LINHA
+
             if (tarefa.concluida) {
                 item.classList.add('completed');
             }
@@ -66,4 +68,46 @@ export async function exibirTarefas() {
             listaTarefas.appendChild(item);
         });
     }
+}
+
+// Função para ATUALIZAR o status de uma tarefa
+export async function atualizarStatusTarefa(id, novoStatus) {
+    const { error } = await supabaseClient
+        .from('tarefas')
+        .update({ concluida: novoStatus })
+        .eq('id', id); // 'eq' significa "equals" (igual a)
+
+    if (error) {
+        console.error('Erro ao atualizar tarefa:', error);
+        alert('Não foi possível atualizar a tarefa.');
+        return false; // Retorna false se deu erro
+    }
+
+    console.log(`Tarefa ${id} atualizada para ${novoStatus}`);
+    return true; // Retorna true se deu certo
+}
+
+// Função que configura os "escutadores de evento" para a lista
+export function initTodoList() {
+    const listaTarefas = document.getElementById('todo-list');
+
+    listaTarefas.addEventListener('change', async (event) => {
+        // Verifica se o que foi alterado foi um checkbox
+        if (event.target.matches('input[type="checkbox"]')) {
+            const item = event.target.closest('.todo-item');
+            const idTarefa = item.dataset.id;
+            const novoStatus = event.target.checked;
+
+            // Chama a função para atualizar no banco de dados
+            const sucesso = await atualizarStatusTarefa(idTarefa, novoStatus);
+
+            // Se a atualização no banco deu certo, atualiza o visual na tela
+            if (sucesso) {
+                item.classList.toggle('completed', novoStatus);
+            } else {
+                // Se deu erro, desfaz a mudança visual do checkbox
+                event.target.checked = !novoStatus;
+            }
+        }
+    });
 }

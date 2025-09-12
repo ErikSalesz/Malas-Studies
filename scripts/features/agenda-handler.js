@@ -1,4 +1,4 @@
-// scripts/features/agenda-handler.js (VERSÃO COMPLETA)
+// scripts/features/agenda-handler.js (VERSÃO FINAL CRUD)
 
 import supabaseClient from '../lib/supabase-client.js';
 import { getdataSelecionada } from '../components/date-picker.js';
@@ -6,7 +6,14 @@ import { getdataSelecionada } from '../components/date-picker.js';
 // --- VARIÁVEIS DO MÓDULO ---
 const detailsModal = document.getElementById('agenda-details-modal');
 const overlay = document.getElementById('overlay');
-let agendamentoSelecionadoId = null;
+let agendamentoSelecionado = null; // Agora guarda o objeto inteiro
+
+// Elementos do Modal de Detalhes/Edição
+const displayView = document.getElementById('modal-content-display');
+const editView = document.getElementById('modal-content-edit');
+const displayActions = document.getElementById('modal-actions-display');
+const editActions = document.getElementById('modal-actions-edit');
+const editForm = document.getElementById('agenda-edit-form');
 
 // --- FUNÇÕES DE DADOS (API) ---
 
@@ -43,6 +50,38 @@ export async function salvarAgendamento(conteudo, horaInicio, horaFim) {
     await exibirAgendamentos(); // Atualiza a timeline
 }
 
+// NOVA FUNÇÃO PARA ATUALIZAR
+async function atualizarAgendamento(id, novosDados) {
+    const { dataSelecionada } = novosDados; // Pega a data base
+    
+    // Recria os objetos Date completos para garantir que a data está correta
+    const [inicioH, inicioM] = novosDados.horaInicio.split(':').map(Number);
+    const dataHoraInicio = new Date(dataSelecionada);
+    dataHoraInicio.setHours(inicioH, inicioM, 0, 0);
+
+    const [fimH, fimM] = novosDados.horaFim.split(':').map(Number);
+    const dataHoraFim = new Date(dataSelecionada);
+    dataHoraFim.setHours(fimH, fimM, 0, 0);
+
+    const { error } = await supabaseClient
+        .from('agendamentos')
+        .update({
+            conteudo: novosDados.conteudo,
+            horario_inicio: dataHoraInicio.toISOString(),
+            horario_fim: dataHoraFim.toISOString()
+        })
+        .eq('id', id);
+    
+    if (error) {
+        console.error("Erro ao atualizar agendamento:", error);
+        alert('Falha ao atualizar o agendamento.');
+        return;
+    }
+    console.log("Agendamento atualizado com sucesso!");
+    closeDetailsModal();
+    await exibirAgendamentos();
+}
+
 // NOVA FUNÇÃO PARA DELETAR
 async function deletarAgendamento() {
     if (!agendamentoSelecionadoId) return;
@@ -65,8 +104,30 @@ async function deletarAgendamento() {
 
 // --- FUNÇÕES DE UI (INTERFACE) ---
 
+function switchToEditMode() {
+    displayView.classList.add('hidden');
+    displayActions.classList.add('hidden');
+    editView.classList.remove('hidden');
+    editActions.classList.remove('hidden');
+
+    // Pré-preenche o formulário com os dados do agendamento selecionado
+    const inicio = new Date(agendamentoSelecionado.horario_inicio);
+    const fim = new Date(agendamentoSelecionado.horario_fim);
+    
+    document.getElementById('agenda-edit-input').value = agendamentoSelecionado.conteudo;
+    document.getElementById('agenda-edit-start-time').value = `${String(inicio.getHours()).padStart(2, '0')}:${String(inicio.getMinutes()).padStart(2, '0')}`;
+    document.getElementById('agenda-edit-end-time').value = `${String(fim.getHours()).padStart(2, '0')}:${String(fim.getMinutes()).padStart(2, '0')}`;
+}
+
+function switchToDisplayMode() {
+    editView.classList.add('hidden');
+    editActions.classList.add('hidden');
+    displayView.classList.remove('hidden');
+    displayActions.classList.remove('hidden');
+}
+
 function openDetailsModal(agendamento) {
-    agendamentoSelecionadoId = agendamento.id;
+    agendamentoSelecionado = agendamento;
 
     const contentEl = document.getElementById('modal-agenda-content');
     const timeEl = document.getElementById('modal-agenda-time');
@@ -86,7 +147,9 @@ function openDetailsModal(agendamento) {
 function closeDetailsModal() {
     detailsModal.classList.add('hidden');
     overlay.classList.add('hidden');
-    agendamentoSelecionadoId = null;
+    agendamentoSelecionado = null;
+    // Garante que o modal sempre abra na visualização
+    setTimeout(switchToDisplayMode, 300); // Atraso para a animação de fechar
 }
 
 // Função para BUSCAR e RENDERIZAR os agendamentos na timeline
@@ -145,6 +208,11 @@ export function initAgendaHandler() {
     const timelineContent = document.getElementById('timeline-content');
     const closeButton = document.getElementById('close-details-button');
     const deleteButton = document.getElementById('delete-agenda-button');
+    const editButton = document.getElementById('edit-agenda-button');
+    const cancelEditButton = document.getElementById('cancel-edit-button');
+    // NOVOS EVENTOS PARA EDIÇÃO
+    editButton.addEventListener('click', switchToEditMode);
+    cancelEditButton.addEventListener('click', switchToDisplayMode);
 
     // Evento para abrir o modal ao clicar em um agendamento
     timelineContent.addEventListener('click', async (event) => {
@@ -176,5 +244,20 @@ export function initAgendaHandler() {
         if (confirm('Tem certeza que deseja deletar este agendamento?')) {
             deletarAgendamento();
         }
+    });
+
+    // NOVOS EVENTOS PARA EDIÇÃO
+    editButton.addEventListener('click', switchToEditMode);
+    cancelEditButton.addEventListener('click', switchToDisplayMode);
+
+    editForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const novosDados = {
+            conteudo: document.getElementById('agenda-edit-input').value.trim(),
+            horaInicio: document.getElementById('agenda-edit-start-time').value,
+            horaFim: document.getElementById('agenda-edit-end-time').value,
+            dataSelecionada: getdataSelecionada() // Passa a data base para a função
+        };
+        atualizarAgendamento(agendamentoSelecionado.id, novosDados);
     });
 }

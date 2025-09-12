@@ -1,4 +1,4 @@
-// scripts/components/date-picker.js
+// scripts/components/date-picker.js (VERSÃO ATUALIZADA)
 
 const datePickerContainer = document.getElementById('date-picker-container');
 const timelineContainer = document.getElementById('timeline-container');
@@ -6,47 +6,61 @@ const timelineContainer = document.getElementById('timeline-container');
 // "Estado" - a data que está atualmente selecionada. Começa com hoje.
 let dataSelecionada = new Date();
 
-// Função para renderizar os dias na tela
+// NOVA FUNÇÃO CENTRALIZADA: Atualiza o estado e re-renderiza a UI
+function selecionarDia(novaData) {
+    dataSelecionada = novaData;
+    renderizarSeletorDeData();
+    // No futuro, aqui chamaremos a função para recarregar os agendamentos da timeline
+    console.log("Data selecionada:", dataSelecionada.toLocaleDateString('pt-BR'));
+}
+
+// Função para renderizar os dias na tela (agora com lógica de clique)
 function renderizarSeletorDeData() {
     datePickerContainer.innerHTML = ''; // Limpa o container
     
-    // Vamos mostrar 7 dias: 3 antes do selecionado, o selecionado, e 3 depois
+    // A data central de referência para o loop
+    const dataCentral = new Date(dataSelecionada);
+
     for (let i = -3; i <= 3; i++) {
-        const data = new Date(dataSelecionada);
-        data.setDate(data.getDate() + i);
+        const dataDoLoop = new Date(dataCentral);
+        dataDoLoop.setDate(dataDoLoop.getDate() + i);
 
         const diaItem = document.createElement('div');
         diaItem.className = 'day-item';
         
-        // Adiciona a classe 'active' se for o dia central (selecionado)
-        if (i === 0) {
+        // Compara o dia, mês e ano para ver se é o dia selecionado
+        if (dataDoLoop.toDateString() === dataSelecionada.toDateString()) {
             diaItem.classList.add('active');
         }
 
-        const nomeDia = data.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
-        const numeroDia = data.getDate();
+        const nomeDia = dataDoLoop.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
+        const numeroDia = dataDoLoop.getDate();
 
         diaItem.innerHTML = `
             <div class="day-name">${nomeDia}</div>
             <div class="day-number">${numeroDia}</div>
         `;
+
+        // ADICIONA A LÓGICA DE CLIQUE
+        diaItem.addEventListener('click', () => {
+            selecionarDia(dataDoLoop);
+        });
         
         datePickerContainer.appendChild(diaItem);
     }
 }
 
-// Função para mudar o dia (para frente ou para trás)
-function mudarDia(offset) {
-    dataSelecionada.setDate(dataSelecionada.getDate() + offset);
-    renderizarSeletorDeData();
-    // No futuro, aqui chamaremos a função para recarregar os agendamentos da timeline
-    console.log("Data alterada para:", dataSelecionada.toLocaleDateString('pt-BR'));
+// Função para mudar o dia (para frente ou para trás) com swipe
+function mudarDiaComSwipe(offset) {
+    const novaData = new Date(dataSelecionada);
+    novaData.setDate(novaData.getDate() + offset);
+    selecionarDia(novaData);
 }
 
-// Lógica para detectar o gesto de arrastar (swipe)
+// --- Lógica do Swipe (continua a mesma) ---
 let touchStartX = 0;
 let touchEndX = 0;
-const swipeThreshold = 50; // Mínimo de pixels para considerar um swipe
+const swipeThreshold = 50;
 
 timelineContainer.addEventListener('touchstart', e => {
     touchStartX = e.changedTouches[0].screenX;
@@ -59,14 +73,12 @@ timelineContainer.addEventListener('touchend', e => {
 
 function handleSwipe() {
     const deltaX = touchEndX - touchStartX;
-    if (Math.abs(deltaX) < swipeThreshold) return; // Não foi um swipe longo o suficiente
+    if (Math.abs(deltaX) < swipeThreshold) return;
 
     if (deltaX > 0) {
-        // Arrastou para a direita -> dia anterior
-        mudarDia(-1);
+        mudarDiaComSwipe(-1); // Dia anterior
     } else {
-        // Arrastou para a esquerda -> próximo dia
-        mudarDia(1);
+        mudarDiaComSwipe(1); // Próximo dia
     }
 }
 

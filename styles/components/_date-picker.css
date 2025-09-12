@@ -47,7 +47,7 @@
 }
 
 /* Estilo para o dia selecionado */
-.day-item.active .day-number {
-    border-bottom: 2px solid var(--cor-cabecalho-texto);
-    padding-bottom: 2px;
+.day-item.active {
+    border: 1px solid var(--cor-cabecalho-texto);
+    border-radius: 8px; /* Bordas um pouco mais arredondadas para o destaque */
 }

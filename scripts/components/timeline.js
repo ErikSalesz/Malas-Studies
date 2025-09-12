@@ -1,6 +1,6 @@
 // scripts/components/timeline.js (VERSÃO ATUALIZADA)
 
-const timelineContainer = document.getElementById('timeline-container');
+const timelineContent = document.getElementById('timeline-content');
 const timeLine = document.getElementById('current-time-line');
 
 // Função interna que calcula e posiciona a linha
@@ -22,7 +22,7 @@ function gerarMarcadoresDeHora() {
         const hourSlot = document.createElement('div');
         hourSlot.className = 'hour-slot';
         hourSlot.textContent = `${String(i).padStart(2, '0')}:00`;
-        timelineContainer.appendChild(hourSlot);
+        timelineContent.appendChild(hourSlot);
     }
 }
 

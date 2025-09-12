@@ -40,7 +40,7 @@ export async function salvarAgendamento(conteudo, horaInicio, horaFim) {
 // Função para BUSCAR e RENDERIZAR os agendamentos na timeline
 export async function exibirAgendamentos() {
     const dataSelecionada = getdataSelecionada();
-    const timelineContainer = document.getElementById('timeline-container');
+    const timelineContent = document.getElementById('timeline-content');
 
     // Limpa apenas os agendamentos antigos antes de desenhar os novos
     document.querySelectorAll('.agenda-item').forEach(item => item.remove());
@@ -82,6 +82,6 @@ export async function exibirAgendamentos() {
         item.style.height = `${height}%`;
         item.innerHTML = `<span>${agendamento.conteudo}</span>`;
         
-        timelineContainer.appendChild(item);
+        timelineContent.appendChild(item);
     });
 }

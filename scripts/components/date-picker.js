@@ -31,6 +31,8 @@ function renderizarSeletorDeData() {
 
         const diaItem = document.createElement('div');
         diaItem.className = 'day-item';
+
+        const hoje = new Date();
         
         if (dataDoLoop.toDateString() === dataSelecionada.toDateString()) {
             diaItem.classList.add('active');

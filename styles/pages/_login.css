@@ -65,6 +65,15 @@
     font-size: 0.875rem;
     border: 1px solid var(--error-500);
     animation: fadeIn 0.3s;
+    /* Adicione esta linha para garantir a transição de cores */
+    transition: all var(--transicao-rapida);
+}
+
+/* NOVA REGRA PARA MENSAGEM DE SUCESSO */
+.auth-message.success {
+    background: var(--success-50);
+    color: var(--success-600);
+    border-color: var(--success-500);
 }
 
 .auth-message.hidden {

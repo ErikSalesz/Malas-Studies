@@ -32,14 +32,26 @@ signupButton.addEventListener('click', async () => {
 
 function handleAuthResponse(error, successMessage = null) {
     if (error) {
+        // Mostra mensagem de erro
         messageEl.textContent = error.message;
+        messageEl.classList.remove('success'); // Garante que não tenha a classe de sucesso
         messageEl.classList.remove('hidden');
+    } else if (successMessage) {
+        // Mostra mensagem de sucesso
+        messageEl.textContent = successMessage;
+        messageEl.classList.add('success'); // Adiciona a classe de sucesso
+        messageEl.classList.remove('hidden');
+        
+        // Limpa o formulário após o sucesso do cadastro
+        form.reset();
+
+        // Esconde a mensagem de sucesso após alguns segundos
+        setTimeout(() => {
+            messageEl.classList.add('hidden');
+            messageEl.classList.remove('success'); // Limpa para a próxima vez
+        }, 5000); // 5 segundos
     } else {
-        if (successMessage) {
-            alert(successMessage);
-            form.reset();
-        } else {
-            window.location.href = '/index.html'; // Redireciona para o app
-        }
+        // Se não houve erro e nem mensagem de sucesso, é um login bem-sucedido
+        window.location.href = '/index.html'; // Redireciona para o app
     }
 }

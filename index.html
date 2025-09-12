@@ -12,11 +12,23 @@
         <h1>Bem-vindo ao Meu PWA!</h1>
     </header>
     <main>
+        <!-- INÍCIO DA NOVA LINHA DO TEMPO -->
+        <div class="timeline-wrapper">
+            <h2>Horários do Dia</h2>
+            <div id="timeline-container">
+                <!-- As horas serão geradas por JavaScript -->
+                <div id="current-time-line"></div>
+            </div>
+        </div>
+        <!-- FIM DA NOVA LINHA DO TEMPO -->
+        
+        <hr>
         <h2>Mensagens do Banco de Dados:</h2>
         <ul id="mensagens-lista">
             <li>Carregando...</li>
         </ul>
         <hr>
+
         <!-- NOVO FORMULÁRIO -->
         <div class="form-container">
             <h3>Adicionar Nova Mensagem</h3>
@@ -26,6 +38,7 @@
             </form>
         </div>
         <!-- FIM DO NOVO FORMULÁRIO -->
+
         <div class="theme-switcher">
             <button id="theme-toggle">Alternar para Modo Escuro</button>
         </div>

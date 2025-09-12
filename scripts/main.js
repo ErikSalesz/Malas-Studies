@@ -4,6 +4,7 @@
 import { initThemeSwitcher } from './theme-switcher.js';
 import { initPushNotifications } from './push-notifications.js';
 import { carregarMensagens, initFormulario } from './data-fetcher.js';
+import { initTimeline } from './timeline.js';
 
 // 1. Registra o Service Worker
 if ('serviceWorker' in navigator) {
@@ -21,6 +22,7 @@ if ('serviceWorker' in navigator) {
 // 2. Inicializa as funcionalidades importadas
 // O DOMContentLoaded garante que o HTML foi completamente carregado antes de rodar os scripts
 document.addEventListener('DOMContentLoaded', () => {
+    initTimeline();
     initThemeSwitcher();
     initPushNotifications();
     carregarMensagens();

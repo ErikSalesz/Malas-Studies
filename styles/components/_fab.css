@@ -39,7 +39,6 @@
   z-index: 1600;
   transition: all var(--transicao-rapida);
   overflow: hidden;
-  position: relative;
 }
 
 .fab::before {

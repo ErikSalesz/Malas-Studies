@@ -157,7 +157,7 @@
 /* === ITENS DA AGENDA === */
 .agenda-item {
   position: absolute;
-  left: calc(var(--espacamento-md) + 24px);
+  left: calc(var(--espacamento-md) + 64px);
   right: var(--espacamento-md);
   background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
   color: white;

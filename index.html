@@ -4,17 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu PWA</title>
+    
+    <!-- Feather Icons - Adicione esta linha -->
+    <script src="https://unpkg.com/feather-icons" defer></script>
+    
     <link rel="stylesheet" href="styles/style.css">
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <header>
-        <h1>Bem-vindo ao Meu PWA!</h1>
-        <div class="theme-switcher">
-            <button id="theme-toggle">Alternar para Modo Escuro</button>
-        </div>
-        <div class="notifications">
-            <button id="enable-notifications">Ativar Notificações</button>
+        <h1>Meu App de Estudos</h1>
+        <div class="header-actions">
+            <button id="theme-toggle" class="header-button" aria-label="Alternar tema">
+                <span id="theme-icon-sun"><i data-feather="sun"></i></span>
+                <span id="theme-icon-moon" style="display: none;"><i data-feather="moon"></i></span>
+            </button>
+            <button id="enable-notifications" class="header-button" aria-label="Ativar notificações">
+                <i data-feather="bell"></i>
+            </button>
         </div>
     </header>
     <main>

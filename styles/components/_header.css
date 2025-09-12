@@ -1,40 +1,38 @@
-/* styles/components/_header.css */
+/* styles/components/_header.css (VERSÃO ATUALIZADA E UNIFICADA) */
+
+/* --- Estilos do Header Principal --- */
 header {
     background: var(--cor-cabecalho-fundo);
     color: var(--cor-cabecalho-texto);
-    padding: 1rem 0;
-    text-align: center;
-    transition: background-color 0.3s, color 0.3s;
-    /* Novas propriedades para o header fixo */
+    padding: 0 20px;
     position: sticky;
     top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000; /* Garante que ele fique acima de tudo */
-    height: 60px; /* Altura definida para o header */
-
-    /* Novas propriedades para alinhar itens */
+    z-index: 1000;
+    height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
 }
+
 header h1 {
-    font-size: 1.5em; /* Ajuste opcional no tamanho do título */
+    font-size: 1.5em;
+    white-space: nowrap; /* Impede que o título quebre linha */
 }
 
-/* Empurra o conteúdo principal para baixo para não ficar atrás do header */
-main {
-    padding-top: 20px; /* Adiciona um espaço extra no topo do main */
+/* Novo container dos controles da direita */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 25px; /* Espaço entre os botões de ícone e o seletor de datas */
 }
 
-/* Container para os botões no header */
+/* --- Estilos dos Botões de Ícone (sem alteração) --- */
 .header-actions {
     display: flex;
     gap: 10px;
 }
 
-/* Estilo geral para os botões do header */
 .header-button {
     background: none;
     border: none;
@@ -56,13 +54,38 @@ main {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-/* Ajusta o tamanho dos ícones dentro dos botões */
 .header-button svg {
     width: 20px;
     height: 20px;
 }
 
-.theme-switcher {
-    padding: 10px;
+/* --- Estilos do Seletor de Datas (AJUSTADOS) --- */
+#date-picker-container {
+    display: flex;
+    gap: 15px; /* Espaço entre os dias */
+}
+
+.day-item {
+    cursor: pointer;
     text-align: center;
+    padding: 5px 8px;
+    border-radius: 8px; /* Bordas arredondadas para o destaque */
+    transition: background-color 0.2s;
+    color: var(--cor-cabecalho-texto);
+}
+
+.day-name {
+    font-size: 0.8em;
+    text-transform: capitalize;
+}
+
+.day-number {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* NOVO ESTILO PARA O DIA ATIVO */
+.day-item.active {
+    background-color: var(--cor-fundo); /* Fundo claro no tema escuro, e vice-versa */
+    color: var(--cor-texto); /* Texto escuro no tema escuro, e vice-versa */
 }

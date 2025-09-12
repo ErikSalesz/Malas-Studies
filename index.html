@@ -14,23 +14,28 @@
 <body>
     <header>
         <h1>Meu App de Estudos</h1>
-        <div class="header-actions">
-            <button id="theme-toggle" class="header-button" aria-label="Alternar tema">
-                <span id="theme-icon-sun"><i data-feather="sun"></i></span>
-                <span id="theme-icon-moon" style="display: none;"><i data-feather="moon"></i></span>
-            </button>
-            <button id="enable-notifications" class="header-button" aria-label="Ativar notificações">
-                <i data-feather="bell"></i>
-            </button>
-        </div>
-        <!-- INÍCIO DO NOVO SELETOR DE DATAS -->
-        <div id="date-picker-wrapper">
-            <div id="date-picker-container">
-                <!-- Os dias da semana serão gerados por JavaScript -->
+
+        <!-- Novo container para agrupar os controles da direita -->
+        <div class="header-controls">
+            <div class="header-actions">
+                <button id="theme-toggle" class="header-button" aria-label="Alternar tema">
+                    <span id="theme-icon-sun"><i data-feather="sun"></i></span>
+                    <span id="theme-icon-moon" style="display: none;"><i data-feather="moon"></i></span>
+                </button>
+                <button id="enable-notifications" class="header-button" aria-label="Ativar notificações">
+                    <i data-feather="bell"></i>
+                </button>
+            </div>
+
+            <!-- O seletor de datas agora está aqui dentro -->
+            <div id="date-picker-wrapper">
+                <div id="date-picker-container">
+                    <!-- Os dias da semana serão gerados por JavaScript -->
+                </div>
             </div>
         </div>
-        <!-- FIM DO NOVO SELETOR DE DATAS -->
     </header>
+    
     <main>
         <!-- INÍCIO DA NOVA LINHA DO TEMPO -->
         <div class="timeline-wrapper">

@@ -30,4 +30,16 @@ signupButton.addEventListener('click', async () => {
     handleAuthResponse(error, 'Conta criada com sucesso! Verifique seu e-mail e faça o login.');
 });
 
-handleAuthResponse(error, 'Conta criada com sucesso! Você já pode entrar.');
+function handleAuthResponse(error, successMessage = null) {
+    if (error) {
+        messageEl.textContent = error.message;
+        messageEl.classList.remove('hidden');
+    } else {
+        if (successMessage) {
+            alert(successMessage);
+            form.reset();
+        } else {
+            window.location.href = '/index.html'; // Redireciona para o app
+        }
+    }
+}

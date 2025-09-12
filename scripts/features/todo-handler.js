@@ -62,11 +62,19 @@ export async function exibirTarefas() {
                 item.classList.add('completed');
             }
             item.innerHTML = `
-                <input type="checkbox" ${tarefa.concluida ? 'checked' : ''}>
-                <span>${tarefa.conteudo}</span>
+                <div class="todo-content">
+                    <input type="checkbox" ${tarefa.concluida ? 'checked' : ''}>
+                    <span>${tarefa.conteudo}</span>
+                </div>
+                <button class="delete-button" aria-label="Deletar tarefa">
+                    <i data-feather="trash-2"></i>
+                </button>
             `;
             listaTarefas.appendChild(item);
         });
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
     }
 }
 
@@ -87,26 +95,59 @@ export async function atualizarStatusTarefa(id, novoStatus) {
     return true; // Retorna true se deu certo
 }
 
+// Função para DELETAR uma tarefa
+export async function deletarTarefa(id) {
+    const { error } = await supabaseClient
+        .from('tarefas')
+        .delete()
+        .eq('id', id);
+
+    if (error) {
+        console.error('Erro ao deletar tarefa:', error);
+        alert('Não foi possível deletar a tarefa.');
+        return false;
+    }
+
+    console.log(`Tarefa ${id} deletada com sucesso`);
+    return true;
+}
+
 // Função que configura os "escutadores de evento" para a lista
 export function initTodoList() {
     const listaTarefas = document.getElementById('todo-list');
 
-    listaTarefas.addEventListener('change', async (event) => {
-        // Verifica se o que foi alterado foi um checkbox
-        if (event.target.matches('input[type="checkbox"]')) {
-            const item = event.target.closest('.todo-item');
+    // Mude o evento para 'click' para capturar cliques nos botões também
+    listaTarefas.addEventListener('click', async (event) => {
+        // --- Lógica para DELETAR ---
+        const deleteButton = event.target.closest('.delete-button');
+        if (deleteButton) {
+            const item = deleteButton.closest('.todo-item');
             const idTarefa = item.dataset.id;
-            const novoStatus = event.target.checked;
+            
+            // Pede confirmação antes de deletar (boa prática)
+            if (confirm('Tem certeza que deseja deletar esta tarefa?')) {
+                const sucesso = await deletarTarefa(idTarefa);
+                if (sucesso) {
+                    // Remove o item da tela para feedback instantâneo
+                    item.remove();
+                }
+            }
+            return; // Encerra a função aqui
+        }
 
-            // Chama a função para atualizar no banco de dados
+        // --- Lógica para ATUALIZAR STATUS (agora dentro do evento 'click') ---
+        const checkbox = event.target.matches('input[type="checkbox"]') ? event.target : null;
+        if (checkbox) {
+            const item = checkbox.closest('.todo-item');
+            const idTarefa = item.dataset.id;
+            const novoStatus = checkbox.checked;
+
             const sucesso = await atualizarStatusTarefa(idTarefa, novoStatus);
 
-            // Se a atualização no banco deu certo, atualiza o visual na tela
             if (sucesso) {
                 item.classList.toggle('completed', novoStatus);
             } else {
-                // Se deu erro, desfaz a mudança visual do checkbox
-                event.target.checked = !novoStatus;
+                checkbox.checked = !novoStatus;
             }
         }
     });

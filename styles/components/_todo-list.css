@@ -11,9 +11,16 @@
 .todo-item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 15px;
     padding: 12px 5px;
     border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.todo-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 [data-theme="dark"] .todo-item {
@@ -32,4 +39,32 @@
 .todo-item.completed span {
     text-decoration: line-through;
     color: #888;
+}
+
+/* NOVOS ESTILOS PARA O BOTÃO DE DELETAR */
+.delete-button {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.delete-button:hover {
+    background-color: #fbe0e0;
+    color: #d9534f;
+}
+
+[data-theme="dark"] .delete-button:hover {
+    background-color: #4a2d2d;
+}
+
+.delete-button svg {
+    width: 18px;
+    height: 18px;
 }

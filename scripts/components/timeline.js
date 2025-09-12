@@ -1,6 +1,7 @@
 // scripts/components/timeline.js (VERSÃO ATUALIZADA)
 
 const timelineContent = document.getElementById('timeline-content');
+const timeLine = document.getElementById('current-time-line');
 
 // Função interna que calcula e posiciona a linha
 function posicionarLinhaDoTempo() {

@@ -28,3 +28,25 @@ self.addEventListener('fetch', event => {
     )
   );
 });
+
+// Este evento 'push' é acionado quando o servidor envia uma notificação
+self.addEventListener('push', event => {
+  console.log('Push recebido!');
+  
+  // Extrai os dados da notificação. Podemos enviar um JSON do servidor.
+  let data = { title: 'Nova Mensagem!', body: 'Você tem uma nova notificação.' };
+  if (event.data) {
+    data = event.data.json();
+  }
+  
+  const options = {
+    body: data.body,
+    icon: 'assets/icon-192x192.png', // Ícone que aparece na notificação
+    badge: 'assets/icon-192x192.png' // Ícone para a barra de status em alguns dispositivos
+  };
+  
+  // Pede ao navegador para mostrar a notificação
+  event.waitUntil(
+    self.registration.showNotification(data.title, options)
+  );
+});

@@ -1,24 +1,26 @@
 // scripts/components/date-picker.js (VERSÃO ATUALIZADA)
 
+// ---- NOVA IMPORTAÇÃO ----
+import { atualizarExibicaoTimeline } from './timeline.js';
+
 const datePickerContainer = document.getElementById('date-picker-container');
 const timelineContainer = document.getElementById('timeline-container');
 
-// "Estado" - a data que está atualmente selecionada. Começa com hoje.
 let dataSelecionada = new Date();
 
-// NOVA FUNÇÃO CENTRALIZADA: Atualiza o estado e re-renderiza a UI
+// Função centralizada: Atualiza o estado, a UI do seletor e a timeline
 function selecionarDia(novaData) {
     dataSelecionada = novaData;
     renderizarSeletorDeData();
-    // No futuro, aqui chamaremos a função para recarregar os agendamentos da timeline
-    console.log("Data selecionada:", dataSelecionada.toLocaleDateString('pt-BR'));
+
+    // ---- A CONEXÃO ACONTECE AQUI ----
+    // Avisa o módulo da timeline que o dia mudou
+    atualizarExibicaoTimeline(novaData); 
 }
 
-// Função para renderizar os dias na tela (agora com lógica de clique)
+// Função para renderizar os dias na tela (sem alteração de lógica interna)
 function renderizarSeletorDeData() {
-    datePickerContainer.innerHTML = ''; // Limpa o container
-    
-    // A data central de referência para o loop
+    datePickerContainer.innerHTML = ''; 
     const dataCentral = new Date(dataSelecionada);
 
     for (let i = -3; i <= 3; i++) {
@@ -28,7 +30,6 @@ function renderizarSeletorDeData() {
         const diaItem = document.createElement('div');
         diaItem.className = 'day-item';
         
-        // Compara o dia, mês e ano para ver se é o dia selecionado
         if (dataDoLoop.toDateString() === dataSelecionada.toDateString()) {
             diaItem.classList.add('active');
         }
@@ -41,7 +42,6 @@ function renderizarSeletorDeData() {
             <div class="day-number">${numeroDia}</div>
         `;
 
-        // ADICIONA A LÓGICA DE CLIQUE
         diaItem.addEventListener('click', () => {
             selecionarDia(dataDoLoop);
         });
@@ -50,7 +50,7 @@ function renderizarSeletorDeData() {
     }
 }
 
-// Função para mudar o dia (para frente ou para trás) com swipe
+// Função de swipe (sem alteração de lógica interna)
 function mudarDiaComSwipe(offset) {
     const novaData = new Date(dataSelecionada);
     novaData.setDate(novaData.getDate() + offset);

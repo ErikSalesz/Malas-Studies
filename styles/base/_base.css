@@ -156,6 +156,11 @@ button:disabled {
   background: var(--cor-texto-terciario);
 }
 
+/* === CLASSE UTILITÁRIA GENÉRICA PARA ESCONDER ELEMENTOS === */
+.hidden {
+  display: none !important;
+}
+
 /* === RESPONSIVIDADE === */
 @media (max-width: 768px) {
   html {

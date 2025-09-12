@@ -1,15 +1,38 @@
+/* Define as variáveis de cor para o tema claro (padrão) */
+:root {
+    --cor-fundo: #f4f4f4;
+    --cor-texto: #333;
+    --cor-cabecalho-fundo: #333;
+    --cor-cabecalho-texto: #fff;
+}
+
+/* Define as variáveis de cor para o tema escuro */
+[data-theme="dark"] {
+    --cor-fundo: #333;
+    --cor-texto: #f4f4f4;
+    --cor-cabecalho-fundo: #222;
+    --cor-cabecalho-texto: #fff;
+}
+
 body {
     font-family: sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 20px;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    transition: background-color 0.3s, color 0.3s;
 }
 
 header {
-    background: #333;
-    color: #fff;
+    background: var(--cor-cabecalho-fundo);
+    color: var(--cor-cabecalho-texto);
     padding: 1rem 0;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.theme-switcher {
+    padding: 10px;
     text-align: center;
 }

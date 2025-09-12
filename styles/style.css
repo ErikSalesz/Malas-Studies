@@ -36,3 +36,33 @@ header {
     padding: 10px;
     text-align: center;
 }
+
+/* styles/style.css */
+
+.form-container {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#add-message-form {
+    display: flex;
+    gap: 10px;
+}
+
+#add-message-form input {
+    flex-grow: 1; /* Faz o input ocupar o espaço disponível */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+#add-message-form button {
+    padding: 8px 15px;
+    border: none;
+    background-color: var(--cor-cabecalho-fundo);
+    color: var(--cor-cabecalho-texto);
+    cursor: pointer;
+    border-radius: 3px;
+}

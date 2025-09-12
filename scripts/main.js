@@ -3,7 +3,7 @@
 // Importa as funções dos nossos módulos
 import { initThemeSwitcher } from './theme-switcher.js';
 import { initPushNotifications } from './push-notifications.js';
-import { carregarMensagens } from './data-fetcher.js';
+import { carregarMensagens, initFormulario } from './data-fetcher.js';
 
 // 1. Registra o Service Worker
 if ('serviceWorker' in navigator) {
@@ -24,4 +24,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initThemeSwitcher();
     initPushNotifications();
     carregarMensagens();
+    initFormulario();
 });

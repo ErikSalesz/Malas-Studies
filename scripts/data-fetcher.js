@@ -29,3 +29,43 @@ export async function carregarMensagens() {
         }
     }
 }
+
+// NOVA FUNÇÃO PARA ADICIONAR MENSAGENS
+async function adicionarMensagem(conteudo) {
+    const { data, error } = await supabaseClient
+        .from('mensagens')
+        .insert([
+            { conteudo: conteudo }
+        ]);
+
+    if (error) {
+        console.error('Erro ao adicionar mensagem:', error);
+        alert('Falha ao enviar a mensagem!');
+        return false;
+    }
+
+    console.log('Mensagem adicionada:', data);
+    return true;
+}
+
+// NOVA FUNÇÃO PARA INICIALIZAR O FORMULÁRIO
+export function initFormulario() {
+    const form = document.getElementById('add-message-form');
+    const input = document.getElementById('message-input');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Impede o recarregamento da página
+
+        const conteudo = input.value.trim();
+        if (conteudo.length === 0) {
+            return; // Não faz nada se o campo estiver vazio
+        }
+
+        const sucesso = await adicionarMensagem(conteudo);
+
+        if (sucesso) {
+            input.value = ''; // Limpa o campo do formulário
+            carregarMensagens(); // Recarrega a lista para mostrar a nova mensagem
+        }
+    });
+}

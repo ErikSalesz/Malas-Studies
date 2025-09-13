@@ -1,0 +1,116 @@
+/* styles/components/_date-picker.css (VERSÃO RESPONSIVA) */
+
+#date-picker-wrapper {
+    position: sticky;
+    top: 80px; /* Altura do header em desktop */
+    z-index: 999;
+    background: var(--cor-fundo-secundario);
+    border-bottom: 1px solid var(--cor-borda);
+    box-shadow: var(--sombra-sm);
+    /* Garante que o scroll horizontal funcione bem */
+    overflow-x: auto;
+}
+
+#date-picker-container {
+    display: flex;
+    /* MUDAÇA PRINCIPAL: Em vez de centralizar, o container começa na esquerda */
+    justify-content: flex-start;
+    gap: var(--espacamento-sm); /* Espaço menor para telas pequenas */
+    padding: var(--espacamento-sm) var(--espacamento-md);
+}
+
+/* Esconde a barra de rolagem visualmente, mas mantém a funcionalidade */
+#date-picker-wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+#date-picker-wrapper {
+    -ms-overflow-style: none;  /* IE, Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.day-item {
+    cursor: pointer;
+    text-align: center;
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    border-radius: var(--raio-md);
+    transition: all var(--transicao-rapida);
+    color: var(--cor-texto-secundario);
+    /* Define uma largura mínima para cada item não ser esmagado */
+    min-width: 60px;
+    flex-shrink: 0; /* Impede que os itens encolham */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.day-item:hover {
+    background-color: var(--cor-primaria-light);
+    color: var(--cor-primaria);
+    transform: translateY(-2px);
+}
+
+.day-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.day-number {
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.day-item.active {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--primary-700));
+    color: white;
+    box-shadow: var(--sombra-md);
+    transform: translateY(-2px);
+}
+
+.day-item.today:not(.active) {
+  background: var(--cor-primaria-light);
+  color: var(--cor-primaria);
+  font-weight: 700;
+}
+
+
+/* --- MEDIA QUERY PARA TABLETS E DESKTOPS --- */
+/* A partir de 768px de largura de tela... */
+@media (min-width: 768px) {
+    #date-picker-wrapper {
+        overflow-x: visible; /* Remove o scroll horizontal */
+    }
+
+    #date-picker-container {
+        /* Volta a centralizar o conteúdo */
+        justify-content: center;
+        gap: var(--espacamento-md); /* Aumenta o espaçamento */
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+
+/* --- AJUSTE FINO NO HEADER PARA CELULAR --- */
+/* Precisamos garantir que o 'top' do date-picker acompanhe a altura do header */
+@media (max-width: 768px) {
+    #date-picker-wrapper {
+        top: 70px; /* Altura do header em tablet */
+    }
+}
+
+@media (max-width: 480px) {
+    #date-picker-wrapper {
+        top: 56px; /* Altura do header em celular */
+    }
+
+    #date-picker-container {
+        padding: var(--espacamento-xs) var(--espacamento-sm);
+    }
+
+    .day-item {
+        min-width: 50px;
+        padding: var(--espacamento-xs) var(--espacamento-sm);
+    }
+}

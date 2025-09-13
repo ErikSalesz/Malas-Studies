@@ -96,130 +96,68 @@ header h1 {
   stroke-width: 2;
 }
 
-/* === SELETOR DE DATAS === */
-#date-picker-wrapper {
-  position: relative;
-}
+/* === RESPONSIVIDADE COMPLETA === */
 
-#date-picker-container {
-  display: flex;
-  gap: var(--espacamento-md);
-  padding: var(--espacamento-xs);
-  background: var(--cor-fundo-terciario);
-  border-radius: var(--raio-lg);
-  border: 1px solid var(--cor-borda);
-}
-
-.day-item {
-  cursor: pointer;
-  text-align: center;
-  padding: var(--espacamento-sm) var(--espacamento-md);
-  border-radius: var(--raio-md);
-  transition: all var(--transicao-rapida);
-  color: var(--cor-texto-secundario);
-  min-width: 48px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.day-item:hover {
-  background-color: var(--cor-primaria-light);
-  color: var(--cor-primaria);
-  transform: translateY(-2px);
-}
-
-.day-name {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 2px;
-}
-
-.day-number {
-  font-size: 1.125rem;
-  font-weight: 700;
-}
-
-/* Dia ativo com design moderno */
-.day-item.active {
-  background: linear-gradient(135deg, var(--cor-primaria), var(--primary-700));
-  color: white;
-  box-shadow: var(--sombra-md);
-  transform: translateY(-2px);
-}
-
-.day-item.active::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  background: linear-gradient(135deg, var(--cor-primaria), var(--primary-700));
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0.7;
-  filter: blur(8px);
-}
-
-/* Indicador para hoje */
-.day-item.today:not(.active) {
-  background: var(--cor-primaria-light);
-  color: var(--cor-primaria);
-  font-weight: 700;
-}
-
-.day-item.today:not(.active)::after {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  background: var(--cor-primaria);
-  border-radius: 50%;
-}
-
-/* === RESPONSIVIDADE === */
-@media (max-width: 768px) {
+/* Mobile pequeno (320px - 479px) */
+@media (max-width: 479px) {
   header {
-    padding: 0 var(--espacamento-md);
-    height: 70px;
+    padding: 0 var(--espacamento-xs);
+    height: 56px;
   }
   
   header h1 {
-    font-size: 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
   }
   
   .header-controls {
-    gap: var(--espacamento-md);
+    gap: var(--espacamento-xs);
+  }
+  
+  .header-actions {
+    gap: 2px;
+  }
+  
+  .header-button {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+  }
+  
+  .header-button svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2.5;
   }
   
   #date-picker-container {
-    gap: var(--espacamento-sm);
-    padding: 2px;
+    gap: 2px;
+    padding: 1px;
+    border-radius: var(--raio-md);
   }
   
   .day-item {
-    padding: var(--espacamento-xs) var(--espacamento-sm);
-    min-width: 40px;
+    padding: 2px 4px;
+    min-width: 28px;
+    border-radius: 4px;
   }
   
   .day-name {
-    font-size: 0.625rem;
+    font-size: 0.5rem;
+    margin-bottom: 0;
+    letter-spacing: 0.25px;
   }
   
   .day-number {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 }
 
-@media (max-width: 480px) {
+/* Mobile (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
   header {
     padding: 0 var(--espacamento-sm);
-    height: 60px;
+    height: 64px;
   }
   
   header h1 {
@@ -243,6 +181,7 @@ header h1 {
   
   #date-picker-container {
     gap: 4px;
+    padding: 2px;
   }
   
   .day-item {
@@ -251,12 +190,150 @@ header h1 {
   }
   
   .day-name {
-    font-size: 0.5rem;
+    font-size: 0.6rem;
     margin-bottom: 1px;
   }
   
   .day-number {
     font-size: 0.875rem;
+  }
+}
+
+/* Tablet portrait (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  header {
+    padding: 0 var(--espacamento-lg);
+    height: 72px;
+  }
+  
+  header h1 {
+    font-size: 1.375rem;
+  }
+  
+  .header-controls {
+    gap: var(--espacamento-lg);
+  }
+  
+  .header-button {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .header-button svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  #date-picker-container {
+    gap: var(--espacamento-sm);
+    padding: 4px;
+  }
+  
+  .day-item {
+    padding: var(--espacamento-xs) var(--espacamento-sm);
+    min-width: 42px;
+  }
+  
+  .day-name {
+    font-size: 0.7rem;
+  }
+  
+  .day-number {
+    font-size: 1rem;
+  }
+}
+
+/* Tablet landscape (1024px - 1279px) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  header {
+    padding: 0 var(--espacamento-xl);
+    height: 76px;
+  }
+  
+  header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .header-controls {
+    gap: var(--espacamento-xl);
+  }
+  
+  .day-item {
+    min-width: 46px;
+  }
+}
+
+/* Desktop (1280px+) */
+@media (min-width: 1280px) {
+  header {
+    padding: 0 var(--espacamento-2xl);
+    height: 80px;
+  }
+  
+  header h1 {
+    font-size: 1.625rem;
+  }
+  
+  .day-item {
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    min-width: 48px;
+  }
+}
+
+/* Orientação landscape para tablets */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  header {
+    height: 64px;
+  }
+  
+  header h1 {
+    font-size: 1.25rem;
+  }
+  
+  .header-controls {
+    gap: var(--espacamento-md);
+  }
+  
+  .day-item {
+    min-width: 40px;
+    padding: 4px 8px;
+  }
+  
+  .day-name {
+    font-size: 0.65rem;
+  }
+  
+  .day-number {
+    font-size: 0.9rem;
+  }
+}
+
+/* Ajustes específicos para dispositivos touch */
+@media (pointer: coarse) {
+  .header-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .day-item {
+    min-width: 44px;
+    min-height: 36px;
+  }
+}
+
+/* Ajustes para densidade de pixels alta */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .header-button svg {
+    stroke-width: 1.8;
+  }
+}
+
+/* Ajustes para telas muito largas */
+@media (min-width: 1600px) {
+  header {
+    max-width: 1400px;
+    margin: 0 auto;
+    border-radius: 0 0 var(--raio-lg) var(--raio-lg);
   }
 }
 

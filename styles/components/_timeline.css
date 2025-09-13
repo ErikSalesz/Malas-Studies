@@ -1,4 +1,16 @@
-/* styles/components/_timeline.css - Timeline Moderna e Interativa */
+/* styles/components/_timeline.css - REFAZER COMPLETO (Mobile First e Robusto) */
+
+/* === VARIÁVEIS LOCAIS PARA A TIMELINE === */
+.timeline-wrapper {
+  /* Define o espaçamento lateral (gutter) para diferentes tamanhos de tela */
+  --gutter: var(--espacamento-md); /* Padrão para mobile */
+}
+
+@media (min-width: 768px) {
+  .timeline-wrapper {
+    --gutter: var(--espacamento-lg); /* Gutter maior para desktop */
+  }
+}
 
 /* === CONTAINER PRINCIPAL === */
 .timeline-wrapper {
@@ -7,165 +19,125 @@
 
 .timeline-wrapper h2 {
   color: var(--cor-texto);
+  margin-left: var(--gutter);
   margin-bottom: var(--espacamento-lg);
-  display: flex;
-  align-items: center;
-  gap: var(--espacamento-sm);
 }
 
-.timeline-wrapper h2::before {
-  content: '';
-  width: 4px;
-  height: 28px;
-  background: linear-gradient(135deg, var(--cor-primaria), var(--primary-700));
-  border-radius: var(--raio-full);
-}
-
-/* === TIMELINE CONTAINER === */
 #timeline-container {
   background: var(--cor-fundo-secundario);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-lg);
   box-shadow: var(--sombra-sm);
-  overflow: hidden;
-  position: relative;
+  overflow: hidden; /* Garante que os cantos arredondados funcionem */
 }
 
-[data-theme="dark"] #timeline-container {
-  background: var(--cor-fundo-secundario);
-  border-color: var(--cor-borda);
-}
-
-/* === CONTEÚDO DA TIMELINE === */
+/* O invólucro que serve de âncora para tudo */
 #timeline-content {
   position: relative;
-  background: 
-    repeating-linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent 59px,
-      var(--cor-borda) 59px,
-      var(--cor-borda) 60px
-    );
 }
 
-/* === SLOTS DE HORA === */
+/* === SLOTS DE HORA (A NOVA ABORDAGEM) === */
 .hour-slot {
-  height: 60px;
-  padding: var(--espacamento-sm) var(--espacamento-md);
-  display: flex;
-  align-items: flex-start;
   position: relative;
-  transition: background-color var(--transicao-rapida);
-  color: var(--cor-texto-terciario);
-  font-size: 0.875rem;
-  font-weight: 500;
-  font-family: 'SF Mono', Monaco, monospace;
+  height: 60px;
+  /* A linha do grid agora é uma borda, garantindo alinhamento perfeito! */
+  border-top: 1px solid var(--cor-borda);
 }
 
-.hour-slot:hover {
-  background-color: var(--cor-primaria-light);
+/* Remove a borda do primeiro item para não ficar dupla */
+#timeline-content .hour-slot:first-child {
+  border-top: none;
 }
 
-.hour-slot::before {
-  content: '';
-  position: absolute;
-  left: var(--espacamento-md);
-  top: var(--espacamento-sm);
-  width: 6px;
-  height: 6px;
-  background: var(--cor-borda-hover);
-  border-radius: 50%;
-  z-index: 2;
-}
-
-.hour-slot:hover::before {
-  background: var(--cor-primaria);
-  transform: scale(1.2);
-  box-shadow: 0 0 8px var(--cor-primaria);
-}
-
-/* Linha vertical conectando os pontos */
-.hour-slot::after {
-  content: '';
-  position: absolute;
-  left: calc(var(--espacamento-md) + 2px);
-  top: calc(var(--espacamento-sm) + 6px);
-  width: 2px;
-  height: calc(100% - var(--espacamento-sm) - 6px);
-  background: var(--cor-borda);
-  z-index: 1;
-}
-
-.hour-slot:last-child::after {
-  display: none;
-}
-
-/* Texto da hora */
+/* Texto da hora (00:00, 01:00, etc.) */
 .hour-slot span {
-  margin-left: var(--espacamento-lg);
-  line-height: 1;
+  position: absolute;
+  top: 0;
+  left: var(--gutter);
+  transform: translateY(-50%); /* O truque para centralizar na linha */
+  background: var(--cor-fundo-secundario); /* Apaga a linha atrás do texto */
+  padding: 0 var(--espacamento-xs);
+  color: var(--cor-texto-terciario);
+  font-size: 0.8rem;
+  font-weight: 500;
+  z-index: 2; /* Garante que o texto fique acima de tudo */
+}
+
+/* Ajuste fino para o primeiro item não ser cortado */
+#timeline-content .hour-slot:first-child span {
+  top: 2px;
+  transform: none;
 }
 
 /* === LINHA DO TEMPO ATUAL === */
 #current-time-line {
   position: absolute;
-  width: calc(100% - var(--espacamento-md));
-  height: 3px;
-  background: linear-gradient(90deg, #ef4444, #f97316, #eab308);
-  left: var(--espacamento-md);
-  border-radius: var(--raio-full);
+  left: var(--gutter);
+  right: 0;
+  height: 2px;
+  background: var(--error-500); /* Cor mais simples, mas forte */
   z-index: 10;
-  transition: all var(--transicao-lenta);
-  box-shadow: 
-    0 0 12px rgba(239, 68, 68, 0.5),
-    var(--sombra-sm);
+  transition: top var(--transicao-media);
+  box-shadow: 0 0 10px var(--error-500);
 }
 
-/* Indicador circular na ponta */
+/* Bolinha indicadora na ponta */
 #current-time-line::before {
   content: '';
   position: absolute;
-  left: -8px;
-  top: -5px;
-  width: 12px;
-  height: 12px;
-  background: #ef4444;
+  left: -5px;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  background: var(--error-500);
   border: 2px solid var(--cor-fundo-secundario);
   border-radius: 50%;
-  z-index: 11;
-  box-shadow: var(--sombra-md);
+  box-shadow: var(--sombra-sm);
 }
 
-/* Indicador de texto com horário atual */
+/* Remove o texto que acompanhava a linha para um visual mais limpo */
 #current-time-line::after {
-  content: attr(data-time);
-  position: absolute;
-  right: -60px;
-  top: -8px;
-  background: #ef4444;
-  color: white;
-  padding: 4px 8px;
-  border-radius: var(--raio-sm);
-  font-size: 0.75rem;
-  font-weight: 600;
-  white-space: nowrap;
-  z-index: 11;
-  box-shadow: var(--sombra-md);
+  display: none;
 }
 
 /* === ITENS DA AGENDA === */
 .agenda-item {
   position: absolute;
-  left: calc(var(--espacamento-md) + 64px);
-  right: var(--espacamento-md);
+  /* O posicionamento agora é calculado com base no gutter */
+  left: calc(var(--gutter) + 50px);
+  right: var(--espacamento-sm);
+  
   background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
   color: white;
-  border-radius: var(--raio-md);
-  padding: var(--espacamento-sm) var(--espacamento-md);
+  border-radius: var(--raio-sm);
+  padding: var(--espacamento-xs) var(--espacamento-sm);
   box-sizing: border-box;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 500;
   overflow: hidden;
   z-index: 1;
+  transition: all var(--transicao-rapida);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.agenda-item:hover {
+  transform: scale(1.02);
+  box-shadow: var(--sombra-md);
+  z-index: 5; /* Traz para frente ao passar o mouse */
+}
+
+/* Ajustes para telas maiores */
+@media (min-width: 768px) {
+  .hour-slot span {
+    font-size: 0.875rem;
+  }
+  
+  .agenda-item {
+    left: calc(var(--gutter) + 65px);
+    right: var(--espacamento-md);
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    font-size: 0.875rem;
+    border-radius: var(--raio-md);
+  }
 }

@@ -100,6 +100,10 @@ button {
   overflow: hidden;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* Botão primário */
 button:not(.header-button):not(.fab) {
   background-color: var(--cor-primaria);
@@ -156,33 +160,109 @@ button:disabled {
   background: var(--cor-texto-terciario);
 }
 
-/* === CLASSE UTILITÁRIA GENÉRICA PARA ESCONDER ELEMENTOS === */
-.hidden {
-  display: none !important;
-}
+/* === RESPONSIVIDADE COMPLETA === */
 
-/* === RESPONSIVIDADE === */
-@media (max-width: 768px) {
+/* Mobile pequeno (320px - 479px) */
+@media (max-width: 479px) {
   html {
     font-size: 14px;
   }
   
   main {
-    padding: var(--espacamento-md) var(--espacamento-sm);
+    padding: var(--espacamento-sm);
+    min-height: calc(100vh - 60px);
+  }
+  
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 1.125rem; }
+  h4 { font-size: 1rem; }
+  
+  button {
+    padding: var(--espacamento-xs) var(--espacamento-sm);
+    font-size: 0.875rem;
+  }
+  
+  input, textarea, select {
+    padding: var(--espacamento-xs) var(--espacamento-sm);
+    font-size: 0.875rem;
+  }
+}
+
+/* Mobile (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  html {
+    font-size: 14px;
+  }
+  
+  main {
+    padding: var(--espacamento-mobile);
+    min-height: calc(100vh - 70px);
   }
   
   h1 { font-size: 1.75rem; }
   h2 { font-size: 1.5rem; }
   h3 { font-size: 1.25rem; }
-}
-
-@media (max-width: 480px) {
-  html {
-    font-size: 13px;
-  }
   
   button {
-    padding: var(--espacamento-xs) var(--espacamento-md);
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    font-size: 0.9rem;
+  }
+}
+
+/* Tablet portrait (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  html {
+    font-size: 15px;
+  }
+  
+  main {
+    padding: var(--espacamento-tablet) var(--espacamento-lg);
+    min-height: calc(100vh - 80px);
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.5rem; }
+}
+
+/* Tablet landscape / Desktop pequeno (1024px - 1279px) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  main {
+    padding: var(--espacamento-desktop) var(--espacamento-xl);
+    max-width: 1000px;
+  }
+}
+
+/* Desktop (1280px+) */
+@media (min-width: 1280px) {
+  main {
+    padding: var(--espacamento-xl) var(--espacamento-2xl);
+    max-width: 1200px;
+  }
+}
+
+/* Orientação específica para tablets */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  main {
+    padding: var(--espacamento-md) var(--espacamento-xl);
+  }
+  
+  h1 { font-size: 1.875rem; }
+  h2 { font-size: 1.625rem; }
+}
+
+/* Ajustes para dispositivos touch */
+@media (pointer: coarse) {
+  button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: var(--espacamento-sm) var(--espacamento-lg);
+  }
+  
+  input, textarea, select {
+    min-height: 44px;
+    padding: var(--espacamento-sm) var(--espacamento-md);
   }
 }
 

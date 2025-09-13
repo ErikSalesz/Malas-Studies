@@ -80,6 +80,19 @@
   --blur-sm: blur(4px);
   --blur-md: blur(8px);
   --blur-lg: blur(16px);
+
+  /* === BREAKPOINTS === */
+  --breakpoint-xs: 320px;   /* Mobile pequeno */
+  --breakpoint-sm: 480px;   /* Mobile */
+  --breakpoint-md: 768px;   /* Tablet */
+  --breakpoint-lg: 1024px;  /* Tablet landscape / Desktop pequeno */
+  --breakpoint-xl: 1280px;  /* Desktop */
+  --breakpoint-2xl: 1536px; /* Desktop grande */
+
+  /* === ESPAÇAMENTOS RESPONSIVOS === */
+  --espacamento-mobile: 0.75rem;
+  --espacamento-tablet: 1rem;
+  --espacamento-desktop: 1.25rem;
 }
 
 /* === TEMA ESCURO === */

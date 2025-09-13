@@ -87,20 +87,14 @@ export function criarBlocoDeEstudoVivo(startTime, materia) {
 }
 
 /**
- * Atualiza a altura do bloco de estudo vivo para que sua base
- * esteja sempre alinhada com a linha da hora atual.
+ * ATUALIZADO: Define a altura do bloco de estudo vivo com base em uma porcentagem direta.
+ * @param {number} heightPercentage - A nova altura do bloco em %.
  */
-export function atualizarBlocoDeEstudoVivo() {
+export function atualizarBlocoDeEstudoVivo(heightPercentage) {
     const blocoVivo = document.getElementById('live-session-block');
-    const linhaDoTempo = document.getElementById('current-time-line');
-    if (!blocoVivo || !linhaDoTempo) return;
+    if (!blocoVivo) return;
 
-    const topBloco = parseFloat(blocoVivo.style.top); // Posição do topo do bloco em %
-    const topLinha = parseFloat(linhaDoTempo.style.top); // Posição da linha em %
-
-    const novaAltura = topLinha - topBloco;
-    
-    if (novaAltura > 0) {
-        blocoVivo.style.height = `${novaAltura}%`;
+    if (heightPercentage >= 0) {
+        blocoVivo.style.height = `${heightPercentage}%`;
     }
 }

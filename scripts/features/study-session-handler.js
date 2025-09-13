@@ -1,5 +1,3 @@
-// scripts/features/study-session-handler.js
-
 import { buscarMaterias } from './materias-handler.js';
 import { salvarAgendamento, exibirAgendamentos } from './agenda-handler.js';
 import { criarBlocoDeEstudoVivo, atualizarBlocoDeEstudoVivo } from '../components/timeline.js';
@@ -8,7 +6,7 @@ import { criarBlocoDeEstudoVivo, atualizarBlocoDeEstudoVivo } from '../component
 const timerWidget = document.getElementById('study-timer-widget');
 const timerButton = document.getElementById('study-timer-button');
 const timerDisplay = document.getElementById('study-timer-display');
-const playIcon = timerButton.querySelector('i'); // Seleciona o ícone
+const playIcon = timerButton.querySelector('i');
 
 const subjectModal = document.getElementById('subject-select-modal');
 const subjectList = document.getElementById('subject-select-list');
@@ -16,8 +14,7 @@ const overlay = document.getElementById('overlay');
 
 // --- ESTADO DA SESSÃO ---
 let activeSession = null; // Guarda os dados da sessão ativa
-let timerInterval = null; // Guarda a referência do nosso 'setInterval'
-let animationFrameId = null;
+let animationFrameId = null; // Guarda a referência da nossa animação
 
 // --- FUNÇÕES DE CONTROLE DA UI ---
 
@@ -59,34 +56,31 @@ async function populateSubjectList() {
     }
 }
 
-function updateTimerDisplay() {
+// --- LÓGICA DA SESSÃO E ANIMAÇÃO ---
+
+function animateSession() {
+    // Para a animação se a sessão foi terminada por outra função
     if (!activeSession) return;
 
-    // --- LÓGICA DE ANIMAÇÃO PRINCIPAL ---
-    function animate() {
-        // Para a animação se a sessão foi terminada
-        if (!activeSession) return;
+    // Calcula as diferenças de tempo
+    const now = new Date();
+    const diffInMs = now - activeSession.startTime;
+    const diffInSeconds = Math.floor(diffInMs / 1000);
+    const diffInMinutes = diffInMs / (1000 * 60);
 
-        // Atualiza o texto do cronômetro
-        const now = new Date();
-        const diffInSeconds = Math.floor((now - activeSession.startTime) / 1000);
-        const hours = Math.floor(diffInSeconds / 3600);
-        const minutes = Math.floor((diffInSeconds % 3600) / 60);
-        const seconds = diffInSeconds % 60;
-        timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-        
-        // Atualiza a altura do bloco na timeline
-        atualizarBlocoDeEstudoVivo();
-        
-        // Pede ao navegador para chamar a função 'animate' novamente no próximo quadro de renderização
-        animationFrameId = requestAnimationFrame(animate);
-    }
+    // 1. ATUALIZA O TEXTO DO CRONÔMETRO
+    const hours = Math.floor(diffInSeconds / 3600);
+    const minutes = Math.floor((diffInSeconds % 3600) / 60);
+    const seconds = diffInSeconds % 60;
+    timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     
-    // Inicia o loop de animação
-    animate();
+    // 2. ATUALIZA A ALTURA DO BLOCO (A NOVA LÓGICA)
+    const elapsedHeightPercentage = (diffInMinutes / 1440) * 100; // 1440 minutos em um dia
+    atualizarBlocoDeEstudoVivo(elapsedHeightPercentage);
+    
+    // 3. PEDE AO NAVEGADOR PARA CONTINUAR A ANIMAÇÃO
+    animationFrameId = requestAnimationFrame(animateSession);
 }
-
-// --- FUNÇÕES DE LÓGICA DA SESSÃO ---
 
 function startSession(materia) {
     closeSubjectModal();
@@ -94,37 +88,42 @@ function startSession(materia) {
     const startTime = new Date();
     activeSession = { materia, startTime };
 
+    // Atualiza a UI do widget
     timerWidget.classList.add('active');
     playIcon.innerHTML = feather.icons.pause.toSvg();
 
-    // Cria o bloco visual com altura zero
+    // Cria o bloco visual. Ele começará com altura 0.
     criarBlocoDeEstudoVivo(startTime, materia);
 
-    // Inicia o nosso loop de animação de forma suave
-    updateTimerDisplay();
+    // Inicia o nosso loop de animação
+    animationFrameId = requestAnimationFrame(animateSession);
 }
 
 async function stopSession() {
     const endTime = new Date();
     
-    // --- PARA O LOOP DE ANIMAÇÃO ---
+    // Para o loop de animação
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
     }
 
-    // O resto da função continua igual...
+    // Salva o agendamento completo no Supabase
     const inicio = activeSession.startTime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     const fim = endTime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
     await salvarAgendamento(activeSession.materia.nome, inicio, fim);
 
+    // Remove o bloco "vivo" da tela
     const blocoVivo = document.getElementById('live-session-block');
     if (blocoVivo) blocoVivo.remove();
 
+    // Atualiza a timeline para mostrar o bloco permanente que acabamos de salvar
     await exibirAgendamentos();
 
+    // Reseta o estado da sessão
     activeSession = null;
 
+    // Reseta a UI do widget
     timerWidget.classList.remove('active');
     playIcon.innerHTML = feather.icons.play.toSvg();
     timerDisplay.textContent = '00:00:00';

@@ -121,6 +121,13 @@
   cursor: pointer;
 }
 
+.agenda-item.live {
+    z-index: 5; /* Garante que fique visível */
+    opacity: 0.85;
+    border-style: dashed;
+    border-width: 2px;
+}
+
 .agenda-item:hover {
   transform: scale(1.02);
   box-shadow: var(--sombra-md);

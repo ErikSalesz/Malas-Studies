@@ -1,6 +1,8 @@
 // scripts/features/study-session-handler.js
 
 import { buscarMaterias } from './materias-handler.js';
+import { salvarAgendamento, exibirAgendamentos } from './agenda-handler.js';
+import { criarBlocoDeEstudoVivo, atualizarBlocoDeEstudoVivo } from '../components/timeline.js';
 
 // --- ELEMENTOS DO DOM ---
 const timerWidget = document.getElementById('study-timer-widget');
@@ -67,40 +69,53 @@ function updateTimerDisplay() {
     const seconds = diffInSeconds % 60;
 
     timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    atualizarBlocoDeEstudoVivo();
 }
 
-// --- FUNÇÕES DE LÓGICA DA SESSÃO ---
+// --- FUNÇÕES DE LÓGICA DA SESSÃO (ATUALIZADAS) ---
 
 function startSession(materia) {
     closeSubjectModal();
-    console.log('Iniciando sessão de estudo para:', materia.nome);
     
-    activeSession = {
-        materia: materia,
-        startTime: new Date() // Fuso horário já é o local/Brasília
-    };
+    const startTime = new Date(); // Fuso horário já é o local/Brasília
+    activeSession = { materia, startTime };
 
-    // Atualiza a UI para o estado "ativo"
+    // Atualiza a UI do widget
     timerWidget.classList.add('active');
-    playIcon.setAttribute('data-feather', 'pause'); // Muda o ícone para 'pause'
-    feather.replace(); // Renderiza o novo ícone
+    playIcon.innerHTML = feather.icons.pause.toSvg(); // Corrige o bug do ícone!
 
-    // Inicia o intervalo que atualiza o cronômetro a cada segundo
+    // --- NOVA LÓGICA ---
+    // Cria o bloco visual na timeline
+    criarBlocoDeEstudoVivo(startTime, materia);
+
     timerInterval = setInterval(updateTimerDisplay, 1000);
 }
 
-function stopSession() {
+async function stopSession() {
+    const endTime = new Date();
     console.log('Parando sessão de estudo. Duração:', timerDisplay.textContent);
     
-    // Aqui, no futuro, salvaremos a sessão no Supabase
-    
-    activeSession = null;
-    clearInterval(timerInterval); // Para o cronômetro
+    // --- NOVA LÓGICA ---
+    // Salva o agendamento completo no Supabase
+    const inicio = activeSession.startTime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const fim = endTime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    await salvarAgendamento(activeSession.materia.nome, inicio, fim);
 
-    // Reseta a UI para o estado inicial
+    // Remove o bloco "vivo" da tela
+    const blocoVivo = document.getElementById('live-session-block');
+    if (blocoVivo) blocoVivo.remove();
+
+    // Atualiza a timeline para mostrar o bloco permanente que acabamos de salvar
+    await exibirAgendamentos();
+
+    // Reseta o estado
+    activeSession = null;
+    clearInterval(timerInterval);
+
+    // Reseta a UI do widget
     timerWidget.classList.remove('active');
-    playIcon.setAttribute('data-feather', 'play');
-    feather.replace();
+    playIcon.innerHTML = feather.icons.play.toSvg(); // Corrige o bug do ícone!
     timerDisplay.textContent = '00:00:00';
 }
 

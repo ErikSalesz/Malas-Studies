@@ -58,3 +58,49 @@ export function initTimeline() {
     // a linha esteja na posição mais recente.
     setInterval(posicionarLinhaDoTempo, 60000); 
 }
+
+/**
+ * Cria o elemento visual para a sessão de estudo ativa na timeline.
+ * @param {Date} startTime - A hora exata de início da sessão.
+ * @param {object} materia - O objeto da matéria, contendo nome e cor.
+ */
+export function criarBlocoDeEstudoVivo(startTime, materia) {
+    const timelineContent = document.getElementById('timeline-content');
+    
+    // Remove qualquer bloco vivo anterior, por segurança
+    const blocoAntigo = document.getElementById('live-session-block');
+    if (blocoAntigo) blocoAntigo.remove();
+
+    const minutoInicio = startTime.getHours() * 60 + startTime.getMinutes();
+    const top = (minutoInicio / 1440) * 100;
+
+    const item = document.createElement('div');
+    item.id = 'live-session-block'; // ID para fácil seleção
+    item.className = 'agenda-item live'; // Classe 'live' para estilo especial
+    item.style.top = `${top}%`;
+    item.style.height = '0px'; // Começa com altura zero
+    item.style.backgroundColor = materia.cor || '#3a86ff'; // Usa a cor da matéria
+    item.style.borderColor = materia.cor || '#0055d4'; // Cor da borda
+    item.innerHTML = `<span>${materia.nome}</span>`;
+    
+    timelineContent.appendChild(item);
+}
+
+/**
+ * Atualiza a altura do bloco de estudo vivo para que sua base
+ * esteja sempre alinhada com a linha da hora atual.
+ */
+export function atualizarBlocoDeEstudoVivo() {
+    const blocoVivo = document.getElementById('live-session-block');
+    const linhaDoTempo = document.getElementById('current-time-line');
+    if (!blocoVivo || !linhaDoTempo) return;
+
+    const topBloco = parseFloat(blocoVivo.style.top); // Posição do topo do bloco em %
+    const topLinha = parseFloat(linhaDoTempo.style.top); // Posição da linha em %
+
+    const novaAltura = topLinha - topBloco;
+    
+    if (novaAltura > 0) {
+        blocoVivo.style.height = `${novaAltura}%`;
+    }
+}

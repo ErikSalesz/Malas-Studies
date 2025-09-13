@@ -17,6 +17,7 @@ const overlay = document.getElementById('overlay');
 // --- ESTADO DA SESSÃO ---
 let activeSession = null; // Guarda os dados da sessão ativa
 let timerInterval = null; // Guarda a referência do nosso 'setInterval'
+let isFirstTick = true; // <-- NOSSO NOVO FLAG!
 
 // --- FUNÇÕES DE CONTROLE DA UI ---
 
@@ -61,6 +62,13 @@ async function populateSubjectList() {
 function updateTimerDisplay() {
     if (!activeSession) return;
 
+    if (isFirstTick) {
+        isFirstTick = false;
+    } else {
+        // A partir da segunda batida, atualizamos a altura normalmente
+        atualizarBlocoDeEstudoVivo();
+    }
+
     const now = new Date();
     const diffInSeconds = Math.floor((now - activeSession.startTime) / 1000);
 
@@ -77,6 +85,9 @@ function updateTimerDisplay() {
 
 function startSession(materia) {
     closeSubjectModal();
+
+    // Sempre que uma nova sessão começar, resetamos nosso flag para true
+    isFirstTick = true; 
     
     const startTime = new Date(); // Fuso horário já é o local/Brasília
     activeSession = { materia, startTime };

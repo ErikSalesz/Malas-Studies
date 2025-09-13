@@ -9,6 +9,7 @@ import { initDatePicker } from './components/date-picker.js';
 import { initFabHandler } from './features/fab-handler.js';
 import { initAgendaHandler } from './features/agenda-handler.js';
 import { exibirAgendamentos } from './features/agenda-handler.js';
+import { initStudySessionHandler } from './features/study-session-handler.js';
 
 // 1. Registra o Service Worker
 if ('serviceWorker' in navigator) {
@@ -39,6 +40,7 @@ async function checkUserAuthentication() {
         initFabHandler();
         initAgendaHandler();
         exibirAgendamentos();
+        initStudySessionHandler();
 
         // --- LÓGICA DO LOGOUT ---
         const logoutButton = document.getElementById('logout-button');

@@ -1,7 +1,7 @@
 // sw.js (VERSÃO ATUALIZADA E MELHORADA)
 
 // 1. Atualizamos a versão do cache
-const CACHE_NAME = 'meu-pwa-cache-v38';
+const CACHE_NAME = 'meu-pwa-cache-v39';
 
 // 2. Atualizamos a lista de arquivos para refletir a nova estrutura
 const urlsToCache = [
@@ -38,6 +38,8 @@ const urlsToCache = [
   '/scripts/features/agenda-handler.js',
   '/scripts/features/update-handler.js',
   '/scripts/features/auth-handler.js',
+  '/scripts/features/materias-handler.js',
+  '/scripts/features/study-session-handler.js',
 
 
   // Bibliotecas

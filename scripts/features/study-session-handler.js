@@ -56,74 +56,71 @@ async function populateSubjectList() {
     }
 }
 
-// --- LÓGICA DA SESSÃO E ANIMAÇÃO ---
 
+// --- O CORAÇÃO DA NOVA LÓGICA DE ANIMAÇÃO ---
 function animateSession() {
-    // Para a animação se a sessão foi terminada por outra função
     if (!activeSession) return;
 
-    // Calcula as diferenças de tempo
     const now = new Date();
     const diffInMs = now - activeSession.startTime;
-    const diffInSeconds = Math.floor(diffInMs / 1000);
-    const diffInMinutes = diffInMs / (1000 * 60);
+    
+    // Pequeno buffer de 100ms no início.
+    // Durante este tempo, a altura do bloco permanecerá zero.
+    // Isso dá tempo para o navegador renderizar o estado inicial.
+    if (diffInMs > 100) {
+        const diffInMinutes = diffInMs / (1000 * 60);
+        const elapsedHeightPercentage = (diffInMinutes / 1440) * 100;
+        atualizarBlocoDeEstudoVivo(elapsedHeightPercentage);
+    }
 
-    // 1. ATUALIZA O TEXTO DO CRONÔMETRO
+    // O cronômetro é atualizado desde o primeiro frame
+    const diffInSeconds = Math.floor(diffInMs / 1000);
     const hours = Math.floor(diffInSeconds / 3600);
     const minutes = Math.floor((diffInSeconds % 3600) / 60);
     const seconds = diffInSeconds % 60;
     timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    
-    // 2. ATUALIZA A ALTURA DO BLOCO (A NOVA LÓGICA)
-    const elapsedHeightPercentage = (diffInMinutes / 1440) * 100; // 1440 minutos em um dia
-    atualizarBlocoDeEstudoVivo(elapsedHeightPercentage);
-    
-    // 3. PEDE AO NAVEGADOR PARA CONTINUAR A ANIMAÇÃO
+
+    // Continua a animação
     animationFrameId = requestAnimationFrame(animateSession);
 }
 
+// --- Funções de Controle da Sessão (ajustes mínimos) ---
 function startSession(materia) {
     closeSubjectModal();
-    
     const startTime = new Date();
     activeSession = { materia, startTime };
 
-    // Atualiza a UI do widget
     timerWidget.classList.add('active');
     playIcon.innerHTML = feather.icons.pause.toSvg();
 
-    // Cria o bloco visual. Ele começará com altura 0.
+    // Cria o bloco. Ele permanecerá com altura zero por 100ms.
     criarBlocoDeEstudoVivo(startTime, materia);
 
-    // Inicia o nosso loop de animação
+    // Inicia o loop de animação
     animationFrameId = requestAnimationFrame(animateSession);
 }
 
 async function stopSession() {
-    const endTime = new Date();
-    
-    // Para o loop de animação
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
     }
+    
+    // O resto da função continua exatamente igual
+    if (activeSession) {
+        const endTime = new Date();
+        const inicio = activeSession.startTime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        const fim = endTime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        await salvarAgendamento(activeSession.materia.nome, inicio, fim);
 
-    // Salva o agendamento completo no Supabase
-    const inicio = activeSession.startTime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-    const fim = endTime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-    await salvarAgendamento(activeSession.materia.nome, inicio, fim);
+        const blocoVivo = document.getElementById('live-session-block');
+        if (blocoVivo) blocoVivo.remove();
 
-    // Remove o bloco "vivo" da tela
-    const blocoVivo = document.getElementById('live-session-block');
-    if (blocoVivo) blocoVivo.remove();
-
-    // Atualiza a timeline para mostrar o bloco permanente que acabamos de salvar
-    await exibirAgendamentos();
-
-    // Reseta o estado da sessão
+        await exibirAgendamentos();
+    }
+    
     activeSession = null;
 
-    // Reseta a UI do widget
     timerWidget.classList.remove('active');
     playIcon.innerHTML = feather.icons.play.toSvg();
     timerDisplay.textContent = '00:00:00';
@@ -137,8 +134,13 @@ function handleTimerClick() {
     }
 }
 
-// --- FUNÇÃO DE INICIALIZAÇÃO ---
+// --- Função de Inicialização (sem alterações) ---
 export function initStudySessionHandler() {
     timerButton.addEventListener('click', handleTimerClick);
-    overlay.addEventListener('click', closeSubjectModal);
+    overlay.addEventListener('click', () => {
+        // Garante que o overlay só feche o modal de matéria
+        if (!subjectModal.classList.contains('hidden')) {
+            closeSubjectModal();
+        }
+    });
 }

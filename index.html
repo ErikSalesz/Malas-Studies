@@ -148,6 +148,27 @@
             <!-- No futuro, outras ações podem vir aqui -->
         </ul>
     </div>
+
+    <!-- INÍCIO DOS NOVOS ELEMENTOS DE ESTUDO ATIVO -->
+
+    <!-- O Modal para Selecionar a Matéria -->
+    <div id="subject-select-modal" class="bottom-sheet hidden">
+        <h4>Iniciar Sessão de Estudo</h4>
+        <ul id="subject-select-list">
+            <!-- As matérias serão inseridas aqui pelo JavaScript -->
+            <li class="loading-state">Carregando matérias...</li>
+        </ul>
+    </div>
+
+    <!-- O Widget do Cronômetro -->
+    <div id="study-timer-widget" class="study-timer">
+        <button id="study-timer-button">
+            <i data-feather="play"></i>
+            <span id="study-timer-display">00:00:00</span>
+        </button>
+    </div>
+
+    <!-- FIM DOS NOVOS ELEMENTOS DE ESTUDO ATIVO -->
     
     <!-- O Botão Flutuante (FAB) -->
     <button id="fab-add-button" class="fab" aria-label="Adicionar item">

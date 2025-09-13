@@ -1,0 +1,65 @@
+/* styles/components/_study-timer.css */
+
+/* === WIDGET DO CRONÔMETRO === */
+.study-timer {
+    position: fixed;
+    bottom: var(--espacamento-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050; /* Um pouco abaixo do FAB */
+    transition: all var(--transicao-media);
+}
+
+#study-timer-button {
+    background: var(--cor-fundo-secundario);
+    color: var(--cor-texto);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-full);
+    padding: var(--espacamento-sm) var(--espacamento-lg);
+    box-shadow: var(--sombra-lg);
+    font-family: 'SF Mono', Monaco, monospace;
+    font-size: 1.125rem;
+    font-weight: 600;
+    backdrop-filter: var(--blur-sm);
+}
+
+/* Estilo para quando uma sessão está ativa */
+.study-timer.active #study-timer-button {
+    background: var(--success-500);
+    color: white;
+    border-color: var(--success-600);
+    box-shadow: var(--sombra-lg), 0 0 20px var(--success-500);
+}
+
+.study-timer.active #study-timer-button i {
+    /* Muda o ícone de 'play' para 'pause' */
+    animation: pulse 2s infinite;
+}
+
+/* === MODAL DE SELEÇÃO DE MATÉRIA === */
+#subject-select-modal h4 {
+    text-align: center;
+    color: var(--cor-texto-secundario);
+    margin: 0 0 var(--espacamento-lg) 0;
+}
+
+#subject-select-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 40vh; /* Limita a altura em telas pequenas */
+    overflow-y: auto;
+}
+
+#subject-select-list li button {
+    /* Herda os estilos de .bottom-sheet ul li button */
+    /* Mas podemos adicionar estilos específicos aqui */
+    font-weight: 600;
+}
+
+/* Estilo para o estado de carregamento */
+#subject-select-list li.loading-state {
+    color: var(--cor-texto-terciario);
+    text-align: center;
+    padding: var(--espacamento-xl);
+}

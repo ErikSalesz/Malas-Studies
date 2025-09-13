@@ -1,7 +1,7 @@
 // sw.js (VERSÃO ATUALIZADA E MELHORADA)
 
 // 1. Atualizamos a versão do cache
-const CACHE_NAME = 'meu-pwa-cache-v37';
+const CACHE_NAME = 'meu-pwa-cache-v38';
 
 // 2. Atualizamos a lista de arquivos para refletir a nova estrutura
 const urlsToCache = [
@@ -23,6 +23,7 @@ const urlsToCache = [
   '/styles/components/_timeline.css',
   '/styles/components/_fab.css',
   '/styles/components/_ui.css',
+  '/styles/components/_study-timer.css',
 
   // JavaScript
   '/scripts/app.js',

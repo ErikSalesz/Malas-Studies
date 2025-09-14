@@ -62,25 +62,19 @@ function animateSession() {
     if (!activeSession) return;
 
     const now = new Date();
-    const diffInMs = now - activeSession.startTime;
+    const diffInMs = now - active-session.startTime;
     
-    // Pequeno buffer de 100ms no início.
-    // Durante este tempo, a altura do bloco permanecerá zero.
-    // Isso dá tempo para o navegador renderizar o estado inicial.
-    if (diffInMs > 100) {
-        const diffInMinutes = diffInMs / (1000 * 60);
-        const elapsedHeightPercentage = (diffInMinutes / 1440) * 100;
-        atualizarBlocoDeEstudoVivo(elapsedHeightPercentage);
-    }
-
-    // O cronômetro é atualizado desde o primeiro frame
-    const diffInSeconds = Math.floor(diffInMs / 1000);
-    const hours = Math.floor(diffInSeconds / 3600);
-    const minutes = Math.floor((diffInSeconds % 3600) / 60);
-    const seconds = diffInSeconds % 60;
-    timerDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-    // Continua a animação
+    // Atualiza o cronômetro
+    // ... (lógica do texto do timer) ...
+    
+    // ATUALIZAÇÃO DA ALTURA (AGORA block-size)
+    const minutoInicio = activeSession.startTime.getHours() * 60 + activeSession.startTime.getMinutes();
+    const minutoAtual = now.getHours() * 60 + now.getMinutes() + (now.getSeconds() / 60);
+    const diffInMinutes = minutoAtual - minutoInicio;
+    
+    const sizePercentage = (diffInMinutes / 1440) * 100;
+    atualizarBlocoDeEstudoVivo(sizePercentage);
+    
     animationFrameId = requestAnimationFrame(animateSession);
 }
 

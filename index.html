@@ -28,6 +28,9 @@
             <button id="logout-button" class="header-button" aria-label="Sair da conta">
                 <i data-feather="log-out"></i>
             </button>
+            <button id="open-subjects-button" class="header-button" aria-label="Gerenciar matérias">
+                <i data-feather="book-open"></i>
+            </button>
         </div>
     </header>
 
@@ -176,6 +179,33 @@
     </button>
 
     <!-- FIM DOS NOVOS ELEMENTOS FLUTUANTES -->
+
+    <!-- INÍCIO DO NOVO MODAL DE MATÉRIAS -->
+    <div id="subjects-modal" class="modal hidden">
+        <h3>Gerenciar Matérias</h3>
+        
+        <!-- Lista de matérias existentes -->
+        <div class="subjects-list-container">
+            <ul id="subjects-list">
+                <!-- Matérias serão inseridas aqui -->
+            </ul>
+        </div>
+
+        <!-- Formulário para adicionar nova matéria -->
+        <form id="add-subject-form">
+            <input type="text" id="subject-name-input" placeholder="Nome da matéria" required>
+            <div class="color-picker-wrapper">
+                <label for="subject-color-input">Cor:</label>
+                <input type="color" id="subject-color-input" value="#3a86ff">
+            </div>
+            <button type="submit">Adicionar</button>
+        </form>
+
+        <div class="modal-actions">
+            <button type="button" id="close-subjects-button" class="secondary">Fechar</button>
+        </div>
+    </div>
+    <!-- FIM DO NOVO MODAL DE MATÉRIAS -->
 
     <!-- Feather Icons - Adicione esta linha -->
     <script src="https://unpkg.com/feather-icons" defer></script>

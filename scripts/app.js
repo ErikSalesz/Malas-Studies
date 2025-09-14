@@ -10,6 +10,7 @@ import { initFabHandler } from './features/fab-handler.js';
 import { initAgendaHandler } from './features/agenda-handler.js';
 import { exibirAgendamentos } from './features/agenda-handler.js';
 import { initStudySessionHandler } from './features/study-session-handler.js';
+import { initMateriasHandler } from './features/materias-handler.js';
 
 // 1. Registra o Service Worker
 if ('serviceWorker' in navigator) {
@@ -41,6 +42,8 @@ async function checkUserAuthentication() {
         initAgendaHandler();
         exibirAgendamentos();
         initStudySessionHandler();
+        initMateriasHandler();
+
 
         // --- LÓGICA DO LOGOUT ---
         const logoutButton = document.getElementById('logout-button');
